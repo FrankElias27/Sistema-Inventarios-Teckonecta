@@ -1,0 +1,13 @@
+.example-spacer{
+  flex: 1 1 auto;
+}
+.navbar {
+  background-color: #f06a2d;
+}
+.blanco{
+  color: white;
+}
+
+.mr20{
+  margin-right: 100px;
+}

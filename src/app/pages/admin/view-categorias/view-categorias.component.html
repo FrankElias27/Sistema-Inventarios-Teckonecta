@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-list>
+    <div mat-subheader>
+      Todas las categorías
+    </div>
+    <mat-list-item *ngFor = "let c of categorias">
+      <mat-icon mat-list-icon>conveyor_belt</mat-icon>
+      <div mat-line>{{ c.titulo }}</div>
+      <div mat-line>{{ c.descripcion }}</div>
+      <mat-divider></mat-divider>
+      <button [routerLink] = "'/admin/categoria/'+c.categoriaId" mat-flat-button color="primary" class="ml20">Actualizar</button>
+      <button mat-flat-button color="warn" class="ml10" (click)="eliminarCategoria(c.categoriaId)">Eliminar</button>
+    </mat-list-item>
+
+  </mat-list>
+
+  <div class="container text-center mt20">
+    <button class="rojo" routerLink="/admin/add-categoria" mat-raised-button color="primary">Agregar categoría</button>
+  </div>
+</mat-card>
+

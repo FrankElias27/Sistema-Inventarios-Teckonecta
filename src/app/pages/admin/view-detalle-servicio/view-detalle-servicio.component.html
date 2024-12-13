@@ -1,0 +1,27 @@
+<div class="search-container">
+    <input type="text"  placeholder="" class="search-input">
+    <button mat-raised-button color="primary" class="custom-button" (click)="abrirModal()" >Agregar Servicios</button>
+  </div>
+  <div class="table-responsive w100">
+    <table mat-table [dataSource]="detalle" class="mat-elevation-z8 w100" style="text-align: center;">
+      <!-- Definición de columnas -->
+      <ng-container matColumnDef="servicio">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Nombre del Servicio </th>
+        <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;"> {{ detalle.servicio.nombreServicio }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Acciones" >
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Acciones </th>
+        <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;">
+          <button mat-flat-button color="warn" class="ml10" (click)="eliminarDetalle(detalle.detalleServiciosId)">Eliminar</button>
+        </td>
+      </ng-container>
+  
+      <!-- Filas de la tabla -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <div class="container text-center mt10">
+    <button  mat-raised-button color="primary" type="submit"  (click)="procesarDetalle()">Procesar Detalle</button>
+  </div>

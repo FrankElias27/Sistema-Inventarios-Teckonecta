@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-list>
+      <div mat-subheader>
+        Todos los Servicios 
+      </div>
+      <mat-list-item *ngFor = "let c of servicios">
+        <mat-icon mat-list-icon>engineering</mat-icon>
+        <div mat-line>{{ c.nombreServicio }}</div>
+        <mat-divider></mat-divider>
+        <button [routerLink] = "'/admin/servicios/'+c.servicioId" mat-flat-button color="primary" class="ml20">Actualizar</button>
+        <button mat-flat-button color="warn" class="ml10" (click)="eliminarServicio(c.servicioId)">Eliminar</button>
+      </mat-list-item>
+  
+    </mat-list>
+  
+    <div class="container text-center mt20">
+      <button class="rojo" routerLink="/admin/add-servicios" mat-raised-button color="primary">Agregar servicio</button>
+    </div>
+  </mat-card>

@@ -1,0 +1,60 @@
+.w100{
+    width: 100%;
+  }
+  .w80{
+    width: 88%;
+  }
+  .w70{
+    width: 84%;
+  }
+  .disabled-section {
+    opacity: 0.7; /* Opacidad reducida para dar un efecto de deshabilitado */
+    pointer-events: none; /* Evita eventos de clics en elementos deshabilitados */
+    background-color: #f0f0f0; /* Fondo gris claro */
+    border: 1px solid #ccc; /* Borde delgado gris */
+    padding: 20px; /* Espaciado interior */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: opacity 0.3s ease; /* Transición suave de la opacidad */
+  }
+  
+  .disabled-section h3 {
+    color: #555; /* Color de texto oscuro para los títulos */
+    margin-bottom: 10px; /* Espacio inferior para separar del contenido */
+  }
+  
+  .disabled-section mat-form-field {
+    opacity: 0.7; /* Opacidad reducida para campos de formulario */
+    pointer-events: none; /* Evita interacción con campos de formulario */
+  }
+  
+  .disabled-section button {
+    opacity: 0.7; /* Opacidad reducida para botones */
+    pointer-events: none; /* Evita interacción con botones */
+    cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+    margin-top: 10px; /* Espacio superior para separar del contenido superior */
+  }
+  
+  .disabled-section table {
+    opacity: 0.7; /* Opacidad reducida para la tabla */
+    pointer-events: none; /* Evita interacción con la tabla */
+    margin-top: 10px; /* Espacio superior para separar del contenido superior */
+  }
+  
+  .disabled-section table th,
+  .disabled-section table td {
+    border-color: #ccc; /* Color de borde gris para celdas de la tabla */
+    padding: 10px; /* Espaciado interior de celdas */
+  }
+  
+  .disabled-section table th {
+    background-color: #f0f0f0; /* Fondo gris claro para celdas de encabezado */
+  }
+  
+  .disabled-section table td {
+    background-color: #fff; /* Fondo blanco para celdas de datos */
+  }
+  
+  .disabled-section button:disabled {
+    opacity: 0.5; /* Opacidad reducida para botones deshabilitados */
+  }

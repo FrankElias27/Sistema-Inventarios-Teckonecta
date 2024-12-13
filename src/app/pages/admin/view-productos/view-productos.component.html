@@ -1,0 +1,67 @@
+<div class="search-container">
+  <input type="text" [(ngModel)]="nombreBuscar" placeholder="Buscar Productos por nombre..." class="search-input" (keydown.enter)="buscarProductos()">
+  <button mat-raised-button color="primary" class="custom-button" (click)="buscarProductos()"><mat-icon>search</mat-icon></button>
+</div>
+<div class="table-responsive w100">
+  <table mat-table [dataSource]="productos" class="mat-elevation-z8 w100" style="text-align: center;">
+    <!-- Definición de columnas -->
+    <ng-container matColumnDef="Nombre">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Producto </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;"> {{ producto.nombre }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Categoría">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Categoría </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;"> {{ producto.categoria.titulo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Stock </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;"> {{ producto.stock }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Nivel">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Nivel de Stock en Almacén </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;">
+        <span *ngIf="producto.stock >= 5" class="estado-label estado-normal">NORMAL</span>
+        <span *ngIf="producto.stock < 5" class="estado-label estado-bajo">BAJO</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Precio Compra" >
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Precio Compra </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;"> ${{ producto.precioCompra }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Precio Venta" >
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Precio Venta </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;"> S/.{{ producto.precioVenta }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Precio Cotizacion" >
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Precio Cotizacion </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;"> S/.{{ producto.precioCotizacion }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Acciones" >
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Acciones </th>
+      <td mat-cell *matCellDef="let producto" style="vertical-align: middle;">
+        <button [routerLink]="'/admin/productos/' + producto.productoId" mat-flat-button color="primary" class="ml10"><mat-icon>edit</mat-icon></button>
+        <button mat-flat-button color="warn" class="ml10" (click)="eliminarProducto(producto.productoId)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <!-- Filas de la tabla -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<div class="pagination-container text-center mt10" >
+  <button mat-raised-button color="primary" (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+  <span class="button-divider"></span>
+  <button mat-raised-button color="primary" (click)="nextPage()">Siguiente</button>
+</div>
+<div class="container text-center mt10">
+  <button routerLink="/admin/add-productos" mat-raised-button color="primary">Agregar producto</button>
+</div>
+

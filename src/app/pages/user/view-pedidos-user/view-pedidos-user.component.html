@@ -1,0 +1,19 @@
+<mat-card class="mt10" *ngFor = "let e of pedido">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>
+        {{ e.cliente }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        FECHA DE ENTREGA: {{ e.fechaEntrega | date: 'dd/MM/yyyy' }}
+      </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button color="primary" [routerLink] = "'/user-dashboard/ver-productos/'+e.pedidoId+'/'+e.cliente">Ver Productos</button>
+      <button mat-stroked-button color="primary" class="ml20">NÚMERO DE PRODUCTOS: {{ e.numTotalProductos }}</button>
+      <button mat-stroked-button color="primary" class="ml20">TOTAL A PAGAR: S/.{{ e.totaldePedido }}</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
+

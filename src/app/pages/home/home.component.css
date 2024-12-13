@@ -1,0 +1,22 @@
+.rojo {
+  background-color: #124584;
+}
+.verde {
+  color: #f06a2d;
+}
+.texto-grande{
+  font-size: 30px;
+}
+.contenedor {
+  text-align: center; /* Centra horizontalmente */
+}
+
+.contenedor .centrar-imagen {
+  display: inline-block; /* Permite centrar con text-align */
+  max-width: 100%; /* Ajusta el tamaño máximo de la imagen */
+  max-height: 100%; /* Ajusta la altura máxima de la imagen */
+  /* También puedes ajustar el tamaño y la posición de la imagen según sea necesario */
+}
+.texto-negrita {
+  font-weight: bold;
+}

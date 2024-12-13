@@ -1,0 +1,63 @@
+<div class="search-container">
+    <input type="text"  placeholder="" class="search-input">
+    <button mat-raised-button color="primary" class="custom-button" (click)="abrirModalCompra()"><mat-icon>payments</mat-icon> Agregar compra</button>
+  </div>
+
+  <div class="table-responsive w100">
+    <table mat-table [dataSource]="compras" class="mat-elevation-z8 w100" style="text-align: center;">
+      <!-- Definición de columnas -->
+      <ng-container matColumnDef="Cliente">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Proveedor </th>
+        <td mat-cell *matCellDef="let compra" style="vertical-align: middle;"> {{ compra.proveedor.razonSocial }}  </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Fecha de la Venta">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Fecha de la Compra </th>
+        <td mat-cell *matCellDef="let compra" style="vertical-align: middle;"> {{ compra.fechaCompra | date:'dd/MM/yyyy' }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Ver Detalle de la Venta">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Detalle de la Compra </th>
+        <td mat-cell *matCellDef="let compra" style="vertical-align: middle;">
+          <button mat-raised-button class="button-label verde" [routerLink] = "'/admin/ver-detalleCompra/'+compra.compraId+'/'+compra.proveedor.razonSocial">
+            <mat-icon aria-hidden="false" aria-label="Ver detalle" style="color: white;">description</mat-icon>
+            <span style="color: white;">Ver Detalle</span>
+          </button>
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Cantidad de Productos">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Cantidad de Artículos</th>
+        <td mat-cell *matCellDef="let compra" style="vertical-align: middle;"> #{{ compra.numTotaldeProductos }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Estado">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Estado </th>
+        <td mat-cell *matCellDef="let cotizacion" [ngClass]="getEstadoClass(cotizacion.estado)" style="vertical-align: middle;">
+          {{ cotizacion.estado }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Total a Pagar" >
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Total </th>
+        <td mat-cell *matCellDef="let compra" style="vertical-align: middle;"> $ {{ compra.totalaPagar }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Acciones" >
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Acciones </th>
+        <td mat-cell *matCellDef="let compra" style="vertical-align: middle;">
+          <button  mat-flat-button color="primary" class="ml10" (click)="abrirModalActualizar(compra.compraId)"><mat-icon>edit</mat-icon> </button>
+          <button mat-flat-button color="warn" class="ml10" (click)="eliminarCompra(compra.compraId)"><mat-icon>delete</mat-icon> </button>
+        </td>
+      </ng-container>
+  
+      <!-- Filas de la tabla -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <div class="pagination-container text-center mt10" >
+    <button mat-raised-button color="primary" (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+    <span class="button-divider"></span>
+    <button mat-raised-button color="primary" (click)="nextPage()">Siguiente</button>
+  </div>

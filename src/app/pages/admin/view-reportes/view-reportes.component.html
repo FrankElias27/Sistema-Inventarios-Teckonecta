@@ -1,0 +1,43 @@
+<div class="container">
+    <mat-card class="example-card">
+      <img mat-card-image src="../../../../assets/grafico-de-barras.png" alt="Image">
+      <mat-card-title style="text-align: center;">Reporte de Existencias del Inventario</mat-card-title>
+      <mat-card-content>
+        <p class="centrar">
+            El "Reporte de Existencias del Inventario RojasConnect" proporciona una visión detallada y actualizada de los productos disponibles en el almacén.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary"(click)="descargarNormalPDF()">Generar Reporte</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="example-card">
+      <img mat-card-image src="../../../../assets/analitica.png" alt="Image">
+      <mat-card-title style="text-align: center;">Reporte de Existencias por Categoría</mat-card-title>
+      <mat-card-content>
+        <p class="centrar">
+            El "Reporte de Existencias por Categoría RojasConnect" ofrece una vista detallada de los productos disponibles en el inventario según sus categorías.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary"(click)="descargarPDF()">Generar Reporte</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="example-card">
+      <img mat-card-image src="../../../../assets/informe-financiero.png" alt="Image">
+      <mat-card-title style="text-align: center;">Reporte de Valoración Total del Inventario</mat-card-title>
+      <mat-card-content>
+        <p class="centrar">
+            Este reporte proporciona un análisis exhaustivo del valor monetario total de todos los productos almacenados en el inventario de la empresa.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="descargarTotalPDF() ">Generar Reporte</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+
+

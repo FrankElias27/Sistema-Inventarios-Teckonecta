@@ -1,0 +1,41 @@
+<mat-card>
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <h1 style="text-align: center; margin-top: 40px;">Agregar Producto al Detalle <span style="font-weight: bold;">{{ cliente }}</span></h1>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form (ngSubmit) = "GuardarDetalle()" >
+        <!-- Formulario de datos de la venta -->
+        <mat-form-field class="w100" appearance="outline">
+          <input type="text" placeholder="Buscar producto" matInput [formControl]="productoControl" [matAutocomplete]="auto" required >
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let producto of filteredProductos | async" [value]="producto">
+              {{ producto.nombre }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <div class="row">
+          <div class="col-md-12">
+
+              <mat-form-field class="w80" appearance="outline">
+                <mat-label>Cantidad de Producto</mat-label>
+                <input [(ngModel)] = "DetalleData.cantidad" matInput type="number"  name="cantidad" required placeholder="Digite la cantidad" >
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit" style="margin-left: 10px;"  >Añadir</button>
+
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</mat-card>
+
+
+
+

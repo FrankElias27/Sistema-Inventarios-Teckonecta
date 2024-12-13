@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-action-list>
+    <div mat-subheader>Menu</div>
+    <button routerLink = "/admin" mat-list-item>
+      <mat-icon mat-list-icon>home</mat-icon> Inicio
+    </button>
+    <button mat-list-item routerLink = "/admin/profile">
+      <mat-icon mat-list-icon>account_circle</mat-icon>Perfil
+    </button>
+    <button mat-list-item routerLink = "/admin/registro">
+      <mat-icon mat-list-icon>account_circle</mat-icon>Registrar (Usuarios)
+    </button>
+    <button mat-list-item routerLink = "/admin/clientes">
+      <mat-icon mat-list-icon>groups</mat-icon>Clientes
+    </button>
+    <button mat-list-item routerLink = "/admin/proveedores">
+      <mat-icon mat-list-icon>local_shipping</mat-icon>Proveedores
+    </button>
+    <button mat-list-item routerLink = "/admin/categorias">
+      <mat-icon mat-list-icon>list</mat-icon>Categorías
+    </button>
+    <button mat-list-item routerLink = "/admin/productos">
+      <mat-icon mat-list-icon>inventory_2</mat-icon>Productos
+    </button>
+    <button mat-list-item routerLink = "/admin/servicios">
+      <mat-icon mat-list-icon>engineering</mat-icon>Servicios
+    </button>
+    <button mat-list-item routerLink = "/admin/compras">
+      <mat-icon mat-list-icon>payments</mat-icon>Compras (Entradas)
+    </button>
+    <button mat-list-item routerLink = "/admin/ventas">
+      <mat-icon mat-list-icon>currency_exchange</mat-icon>Ventas (Salidas)
+    </button>
+    <button mat-list-item routerLink = "/admin/ver-reportes">
+      <mat-icon mat-list-icon>summarize</mat-icon>Reportes
+    </button>
+    <button mat-list-item routerLink = "/admin/ver-cotizaciones">
+      <mat-icon mat-list-icon>request_quote</mat-icon>Cotizaciones
+    </button>
+    <button mat-list-item (click) = "logout()">
+      <mat-icon mat-list-icon>logout</mat-icon>Salir
+    </button>
+  </mat-action-list>
+</mat-card>

@@ -1,0 +1,113 @@
+<mat-card>
+  <h1>Actualizar producto</h1>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form *ngIf = "producto" (submit) = "actualizarDatos()">
+
+        <mat-form-field class="w100" appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input
+          [(ngModel)] = "producto.nombre"
+          type="text"
+          name="nombre"
+          placeholder="Digite el nombre"
+          required
+          matInput>
+        </mat-form-field>
+
+        <mat-form-field class="w100" appearance="fill">
+          <mat-label>Código de Producto</mat-label>
+          <input
+          [(ngModel)] = "producto.codigo"
+          type="text"
+          name="codigo"
+          required
+          placeholder="Digite el código del Producto"
+          matInput>
+        </mat-form-field>
+
+        <mat-form-field class="w100" appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <textarea
+          name="descripcion"
+          matInput
+          required
+          placeholder="Digite la descripción del producto"
+          rows="4"
+          [(ngModel)] = "producto.descripcion"
+          >
+          </textarea>
+        </mat-form-field>
+
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w100" appearance="fill">
+              <mat-label>Precio de Compra ($)</mat-label>
+              <input
+              [(ngModel)]  = "producto.precioCompra"
+              type="number"
+              name="precioCompra"
+              required
+              placeholder="Digite el precio"
+              matInput>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="w100" appearance="fill">
+              <mat-label>Precio de Venta(S/.) </mat-label>
+              <input
+              [(ngModel)]  = "producto.precioVenta"
+              [value] = "calcularValorDeseado()"
+              type="number"
+              name="precioVenta"
+              placeholder="Digite el precio"
+              required
+              matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field class="w100" appearance="fill">
+          <mat-label>Stock de Producto</mat-label>
+          <input
+          [(ngModel)] = "producto.stock"
+          type="number"
+          name="stock"
+          required
+          placeholder="Digite el stock del Producto"
+          matInput>
+        </mat-form-field>
+
+        <mat-form-field class="w100" appearance="fill">
+          <mat-label>URL de la Imagen del Producto</mat-label>
+          <input
+          [(ngModel)] = "producto.urlimagen"
+          type="text"
+          name="nombr"
+          required
+          placeholder="Digite la url de la Imagen del producto"
+          matInput>
+        </mat-form-field>
+
+        <mat-slide-toggle class="mt20" name = "activo" [(ngModel)] = "producto.activo" color="primary">
+          Estado de publicación
+        </mat-slide-toggle>
+
+        <mat-form-field appearance="fill" class="mt20 w100">
+          <mat-label>Categorías</mat-label>
+          <mat-select name="categoria" [(ngModel)] = "producto.categoria.categoriaId" required>
+            <mat-option *ngFor = "let c of categorias" [value] = "c.categoriaId">
+              {{ c.titulo }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="container text-center">
+          <button mat-raised-button color="primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</mat-card>
+
+

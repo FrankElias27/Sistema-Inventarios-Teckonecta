@@ -1,0 +1,52 @@
+.container {
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; /* Alineación vertical al inicio */
+    padding: 20px;
+  }
+  
+  .example-card {
+    margin-top: 40px;
+    width: 448px; /* Ancho fijo */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave */
+    transition: transform 0.3s ease; /* Efecto de transición */
+  }
+  
+  .example-card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+  }
+  
+  .mat-card-image {
+    margin-top: 20px;
+    height: 220px; /* Altura fija para la imagen */
+    object-fit: contain; /* Cubrir la imagen */
+  }
+  
+  .mat-card-title {
+    font-size: 16px; /* Tamaño de fuente del título */
+    font-weight: bold; /* Negrita */
+    padding: 12px; /* Espaciado interno */
+  }
+  
+  .mat-card-content {
+    padding: 12px; /* Espaciado interno */
+  }
+  
+  .mat-card-actions {
+    display: flex;
+    justify-content: center; /* Botones centrados */
+  }
+  
+  .mat-button {
+    margin: 0 4px; /* Espaciado entre botones */
+  }
+
+
+  .centrar{
+    text-align: justify;
+  }
+   .close-button {
+    position: absolute;
+  }
