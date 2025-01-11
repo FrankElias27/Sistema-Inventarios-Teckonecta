@@ -40,7 +40,7 @@ export class ActualizarServicioComponent implements OnInit {
     this.ModalService.cerrarActualizarServicio();
   }
 
-  public actualizarDatos(){
+   actualizarDatos(){
     this.serviciosService.actualizarServicio(this.servicio).subscribe(
       (data) => {
         Swal.fire('Servicio actualizado','Servicio ha sido actualizado con éxito','success').then(() => {

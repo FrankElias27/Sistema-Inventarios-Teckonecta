@@ -42,6 +42,7 @@ import { SignupComponent } from './pages/admin/signup/signup.component';
 import { ViewUsuariosComponent } from './pages/admin/view-usuarios/view-usuarios.component';
 import { ViewInventariosComponent } from './pages/admin/view-inventarios/view-inventarios.component';
 import { ViewExistenciasComponent } from './pages/admin/view-existencias/view-existencias.component';
+import { ViewMovimientosComponent } from './pages/admin/view-movimientos/view-movimientos.component';
 
 const routes: Routes = [
   {
@@ -118,6 +119,11 @@ const routes: Routes = [
         {
           path:'existencias',
           component : ViewExistenciasComponent
+        },
+
+        {
+          path:'movimientos',
+          component : ViewMovimientosComponent
         },
 
         {

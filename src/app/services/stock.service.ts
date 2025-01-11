@@ -21,4 +21,12 @@ export class StockService {
   public agregarStock(stock:any){
     return this.http.post(`${baserUrl}/stock/`,stock);
   }
+
+  public obtenerStock(stockId:any){
+    return this.http.get(`${baserUrl}/stock/${stockId}`);
+  }
+
+  public actualizarStock(stock:any){
+    return this.http.put(`${baserUrl}/stock/`,stock);
+  }
 }

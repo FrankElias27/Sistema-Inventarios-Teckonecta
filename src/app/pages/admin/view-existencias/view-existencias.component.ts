@@ -21,6 +21,7 @@ export class ViewExistenciasComponent implements OnInit {
   currentPage: number = 0;
   totalElements: number = 0;
   dataSource = new MatTableDataSource<any>();
+  size: number = 8;
 
   constructor(private InventarioService:InventarioService,private StockService:StockService,
     private ModalService:ModalService
@@ -48,20 +49,38 @@ export class ViewExistenciasComponent implements OnInit {
   }
 
   visualizarInventarioStock(): void {
-
     if (this.selectedInventario && this.selectedInventario.inventarioId) {
       const inventarioId = this.selectedInventario.inventarioId;
       this.StockService.getInventarioStock(inventarioId, this.currentPage).subscribe(
-        (response) => {
+        (response: any) => {
           console.log('Respuesta del Servicio Stock:', response);
-          this.dataSource.data = response.content; // Almacena los InventarioStock
-          this.totalElements = response.totalElements;
+          this.dataSource.data = response.content;
+          this.totalElements = response.totalElements; // Actualiza el número total de elementos
         },
         (error) => {
           console.error('Error al obtener los InventarioStock:', error);
         }
       );
     }
+  }
+
+  nextPage(): void {
+    const totalPages = Math.ceil(this.totalElements / this.size);
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.visualizarInventarioStock();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.visualizarInventarioStock();
+    }
+  }
+
+  abrirModalActualizar(stockId: any): void {
+    this.ModalService.openActualizarStock(stockId);
   }
 
   eliminarDetalle(stockId: any) {

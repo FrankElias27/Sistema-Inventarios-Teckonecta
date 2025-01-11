@@ -90,6 +90,8 @@ import { ModalProcesarCompraComponent } from './pages/admin/modal-procesar-compr
 import { ModalProcesarVentaComponent } from './pages/admin/modal-procesar-venta/modal-procesar-venta.component';
 import { ViewExistenciasComponent } from './pages/admin/view-existencias/view-existencias.component';
 import { AddExistenciaComponent } from './pages/admin/add-existencia/add-existencia.component';
+import { ActualizarStockInventarioComponent } from './pages/admin/actualizar-stock-inventario/actualizar-stock-inventario.component';
+import { ViewMovimientosComponent } from './pages/admin/view-movimientos/view-movimientos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -156,7 +158,9 @@ import { AddExistenciaComponent } from './pages/admin/add-existencia/add-existen
     ModalProcesarCompraComponent,
     ModalProcesarVentaComponent,
     ViewExistenciasComponent,
-    AddExistenciaComponent
+    AddExistenciaComponent,
+    ActualizarStockInventarioComponent,
+    ViewMovimientosComponent
 
 
   ],

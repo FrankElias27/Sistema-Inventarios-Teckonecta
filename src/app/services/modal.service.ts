@@ -37,6 +37,7 @@ import { ActualizarInventarioComponent } from '../pages/admin/actualizar-inventa
 import { ModalProcesarCompraComponent } from '../pages/admin/modal-procesar-compra/modal-procesar-compra.component';
 import { ModalProcesarVentaComponent } from '../pages/admin/modal-procesar-venta/modal-procesar-venta.component';
 import { AddExistenciaComponent } from '../pages/admin/add-existencia/add-existencia.component';
+import { ActualizarStockInventarioComponent } from '../pages/admin/actualizar-stock-inventario/actualizar-stock-inventario.component';
 
 
 @Injectable({
@@ -85,6 +86,8 @@ export class ModalService {
   dialogRef32: MatDialogRef<ActualizarInventarioComponent> | null = null;
 
   dialogRef35: MatDialogRef<AddExistenciaComponent> | null = null;
+
+  dialogRef36: MatDialogRef<ActualizarStockInventarioComponent> | null = null;
 
   dialogRef2: MatDialogRef<ModalDetalleComponent> | null = null;
 
@@ -358,6 +361,14 @@ export class ModalService {
     });
   }
 
+  openActualizarStock(stockId: string): void {
+    this.dialogRef36 = this.dialog.open(ActualizarStockInventarioComponent, {
+      width: '500px',
+      disableClose: true,
+      autoFocus: false,
+      data: { stockId: stockId}
+    });
+  }
 
   openVentaModal(ventaId: string) {
     const dialogRef2 = this.dialog.open(ModalDetalleComponent, {
@@ -664,6 +675,12 @@ export class ModalService {
   cerrarAddExistencia(): void {
     if (this.dialogRef35) {
       this.dialogRef35.close();
+    }
+  }
+
+  cerrarActualizarStock(): void {
+    if (this.dialogRef36) {
+      this.dialogRef36.close();
     }
   }
 }
