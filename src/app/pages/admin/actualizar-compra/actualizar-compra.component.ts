@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { startWith, map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-actualizar-compra',
@@ -31,6 +32,18 @@ export class ActualizarCompraComponent implements OnInit {
     this.compraService.obtenerCompra(this.compraId).subscribe(
       (data) => {
         this.compra = data;
+        // Asegurarse de que la fecha se mantenga en el formato correcto
+                if (this.compra.fechaCompra) {
+                  // Usar parseZone para asegurarse de que la fecha no se vea afectada por la zona horaria
+                  const fechaFormateada = moment.parseZone(this.compra.fechaCompra).format('MM/DD/YYYY');
+
+                  // Convertir la fecha a un objeto Date
+                  const dateObj = moment(fechaFormateada, 'MM/DD/YYYY').toDate();
+
+                  // Asignar el objeto Date al modelo
+                  this.compra.fechaCompra = dateObj;
+                }
+
         console.log(this.compra);
       },
       (error) => {
@@ -74,10 +87,29 @@ export class ActualizarCompraComponent implements OnInit {
     this.modalService.cerrarModalActualizar2();
   }
 
-  public actualizarDatos(){
+  actualizarDatos(){
+
     const ProveedorSeleccionado = this.proveedorControl.value;
 
-    this.compra.proveedor.proveedorId=ProveedorSeleccionado.proveedorId;
+    if (!ProveedorSeleccionado || !ProveedorSeleccionado.proveedorId) {
+      Swal.fire('Proveedor no seleccionado', 'Por favor seleccione un proveedor.', 'error');
+      return;
+    }
+
+    // Ajustar la fecha seleccionada con la hora actual usando Moment.js
+    const fechaSeleccionada = moment(this.compra.fechaCompra); // Asegurarse de que fechaCompra tenga un valor válido
+    const fechaConHoraActual = fechaSeleccionada.set({
+      hour: moment().hour(),
+      minute: moment().minute(),
+      second: 0,
+    });
+
+    // Convertir la fecha a una cadena en formato ISO
+    this.compra.fechaCompra = fechaConHoraActual.format('YYYY-MM-DDTHH:mm:ss');
+
+    // Asignar el ID del proveedor seleccionado
+    this.compra.proveedor.proveedorId = ProveedorSeleccionado.proveedorId;
+
     this.compraService.actualizarCompras(this.compra).subscribe(
       (data) => {
         Swal.fire('Compra actualizada','La Compra ha sido actualizada con éxito','success').then(

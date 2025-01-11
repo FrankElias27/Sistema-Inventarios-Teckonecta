@@ -2,19 +2,22 @@
   <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
     <mat-icon>close</mat-icon>
   </button>
-  <h1 style="text-align: center;margin-top: 40px;">Actualizar cotizacion al Sistema</h1>
-
+  <br>
+  <mat-card-subtitle style="text-align: center;">Actualizar cotizacion</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <form (ngSubmit)="ActualizarCotizacion()">
         <!-- Formulario de datos de la venta -->
         <mat-form-field class="w100" appearance="outline">
-          <mat-label>Nombre del Cliente</mat-label>
-          <input [(ngModel)]="fullName" matInput type="text" name="nombreCliente" required placeholder="Digite el nombre del Cliente">
+          <mat-label>Cliente Actual</mat-label>
+          <input [(ngModel)]="fullName" matInput  name="nombreCliente" required placeholder="Digite el nombre del Cliente">
         </mat-form-field>
 
         <mat-form-field class="w100" appearance="outline">
-          <input type="text" placeholder="Buscar Cliente" matInput [formControl]="clienteControl" [matAutocomplete]="auto">
+          <mat-label>Nuevo Cliente</mat-label>
+          <input placeholder="Buscar Cliente" matInput [formControl]="clienteControl" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente">
               {{ cliente.nombre }} {{ cliente.apellidoPaterno }} {{ cliente.apellidoMaterno }}
@@ -22,16 +25,14 @@
           </mat-autocomplete>
         </mat-form-field>
 
-        <mat-form-field class="w100" appearance="outline">
-          <mat-label>Asunto:</mat-label>
-          <textarea
-          name="descripcion"
-          matInput
-          placeholder="Digite el Asunto de la Cotizacion"
-          rows="4"
-          [(ngModel)]="cotizacion.asuntoCotizacion">
-          </textarea>
-        </mat-form-field>
+        <div class="mb-4">
+          <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asunto:</label>
+           <textarea id="descripcion" name="descripcion" [(ngModel)] = "cotizacion.asuntoCotizacion"
+            rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+             rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+               dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Digite el asunto de la Cotización"></textarea>
+              </div>
 
         <div class="row">
           <div class="col-md-12">

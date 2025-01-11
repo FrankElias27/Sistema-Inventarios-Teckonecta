@@ -1,32 +1,30 @@
-<mat-card class="mt20">
-  <div class="container">
-   <div class="row">
-     <div class="col-md-12">
-      <br>
-         <mat-card-title>
-          Bienvenido administrador
-         </mat-card-title>
 
-       <mat-card-subtitle>Panel de administrador</mat-card-subtitle>
-       <mat-card-content class="ml30">
-         <h1></h1>
-         <p></p>
-         <mat-divider></mat-divider>
-         <br>
-         <h1>Sus funciones : </h1>
-         <ul>
-           <li>Gestionar las categorías</li>
-           <li>Gestionar los productos</li>
-           <li>Gestionar los clientes</li>
-           <li>Gestionar los proveedores</li>
-           <li>Gestionar los servicios</li>
-           <li>Generar cotizaciones</li>
-           <li>Gestionar entrada y salida de productos del Almacén</li>
-         </ul>
-         <mat-divider></mat-divider>
-         <br>
-       </mat-card-content>
-     </div>
-   </div>
+<section class="bg-gray-50 dark:bg-gray-900 h-full ">
+  <div class=" w-full flex flex-col items-center justify-center px-6 py-8 sm:pl-[80px] mx-auto md:h-screen lg:py-0 ">
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 max-w-screen-lg xl:p-0 dark:bg-gray-800 dark:border-gray-700 div-margin">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div class=" grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-[40px] lg:grid-cols-12">
+              <div class="mr-auto place-self-center lg:col-span-7">
+                  <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Bienvenido {{ user?.nombre | capitalize }}   al Panel Administrativo.</h1>
+                  <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400 text-justify ">Agrega, edita o elimina usuarios, gestiona el stock de los productos y genera reportes en tiempo real. ¡Todo lo que necesitas para mantener Teccuida & Teckonecta en perfecto orden está a solo un clic de distancia!</p>
+                  <a routerLink = "/admin/ventas" class="mb-2 inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-[#ff7637] hover:bg-[#ff7637] focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                      Ventas
+
+                      <svg class="w-5 h-5 ml-2 -mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .979.796L7.939 6H19a1 1 0 0 1 .979 1.204l-1.25 6a1 1 0 0 1-.979.796H9.605l.208 1H17a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L5.686 5H5a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                      </svg>
+
+
+                    </a>
+                  <a routerLink = "/admin/ver-reportes" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                      Reportes
+                  </a>
+              </div>
+              <div class="hidden lg:mt-0 lg:col-span-5 lg:flex lg:ml-8">
+                  <img src="../../../../assets/Home.webp" alt="mockup">
+              </div>
+          </div>
+          </div>
+      </div>
   </div>
-</mat-card>
+</section>

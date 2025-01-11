@@ -1,109 +1,96 @@
 <mat-card>
-  <h1>Actualizar producto</h1>
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Actualizar Producto</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
+
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <form *ngIf = "producto" (submit) = "actualizarDatos()">
 
-        <mat-form-field class="w100" appearance="fill">
-          <mat-label>Nombre</mat-label>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
           <input
-          [(ngModel)] = "producto.nombre"
-          type="text"
           name="nombre"
+          type="text" id="nombre"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Digite el nombre"
-          required
-          matInput>
-        </mat-form-field>
-
-        <mat-form-field class="w100" appearance="fill">
-          <mat-label>Código de Producto</mat-label>
-          <input
-          [(ngModel)] = "producto.codigo"
-          type="text"
-          name="codigo"
-          required
-          placeholder="Digite el código del Producto"
-          matInput>
-        </mat-form-field>
-
-        <mat-form-field class="w100" appearance="fill">
-          <mat-label>Descripción</mat-label>
-          <textarea
-          name="descripcion"
-          matInput
-          required
-          placeholder="Digite la descripción del producto"
-          rows="4"
-          [(ngModel)] = "producto.descripcion"
+          [(ngModel)] = "producto.nombre"
           >
-          </textarea>
-        </mat-form-field>
-
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w100" appearance="fill">
-              <mat-label>Precio de Compra ($)</mat-label>
-              <input
-              [(ngModel)]  = "producto.precioCompra"
-              type="number"
-              name="precioCompra"
-              required
-              placeholder="Digite el precio"
-              matInput>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-6">
-            <mat-form-field class="w100" appearance="fill">
-              <mat-label>Precio de Venta(S/.) </mat-label>
-              <input
-              [(ngModel)]  = "producto.precioVenta"
-              [value] = "calcularValorDeseado()"
-              type="number"
-              name="precioVenta"
-              placeholder="Digite el precio"
-              required
-              matInput>
-            </mat-form-field>
-          </div>
         </div>
-        <mat-form-field class="w100" appearance="fill">
-          <mat-label>Stock de Producto</mat-label>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código de Producto(SKU)</label>
           <input
-          [(ngModel)] = "producto.stock"
-          type="number"
-          name="stock"
-          required
-          placeholder="Digite el stock del Producto"
-          matInput>
-        </mat-form-field>
+          name="codigo"
+          type="text" id="codigo"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el Código de Producto "
+          [(ngModel)] = "producto.codigo"
+          >
+        </div>
 
-        <mat-form-field class="w100" appearance="fill">
-          <mat-label>URL de la Imagen del Producto</mat-label>
+        <div class="mb-4">
+          <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Características</label>
+           <textarea id="descripcion" name="descripcion" [(ngModel)] = "producto.descripcion"
+            rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+             rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+               dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Digite las características del Producto"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Costo de Compra ($)</label>
           <input
-          [(ngModel)] = "producto.urlimagen"
-          type="text"
-          name="nombr"
-          required
-          placeholder="Digite la url de la Imagen del producto"
-          matInput>
-        </mat-form-field>
+          name="precioCompra"
+          type="text" id="precioCompra"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el Precio de Compra"
+          [(ngModel)]  = "producto.costoCompraUSD"
+          >
+        </div>
 
-        <mat-slide-toggle class="mt20" name = "activo" [(ngModel)] = "producto.activo" color="primary">
-          Estado de publicación
-        </mat-slide-toggle>
+        <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categorías</label>
+        <mat-select name="categoria" [(ngModel)]="producto.categoria.categoriaId" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <mat-option *ngFor="let c of categorias" [value]="c.categoriaId">
+            {{ c.titulo }}
+          </mat-option>
+        </mat-select>
+      </div>
 
-        <mat-form-field appearance="fill" class="mt20 w100">
-          <mat-label>Categorías</mat-label>
-          <mat-select name="categoria" [(ngModel)] = "producto.categoria.categoriaId" required>
-            <mat-option *ngFor = "let c of categorias" [value] = "c.categoriaId">
-              {{ c.titulo }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+       <!-- Selección de Archivo -->
+       <mat-label>
+        <div class="flex items-center space-x-2">
+            <!-- Texto -->
+            Escoja la imagen del Producto (Peso Max. 50kb):
 
-        <div class="container text-center">
-          <button mat-raised-button color="primary">Guardar</button>
+            <!-- Imagen -->
+            <a href="https://squoosh.app/" target="_blank">
+              <img src="../../../../assets/squoosh.webp" class="h-7 w-10 sm:h-10 sm:w-10" alt="">
+            </a>
+        </div>
+    </mat-label>
+      <div class="file-input-wrapper">
+        <input type="file" id="file-input" (change)="onFileChange($event)" accept="image/*" />
+        <label for="file-input" class="file-input-button">
+          <mat-icon class="file-icon">attach_file</mat-icon>
+          <span>Seleccionar archivo</span>
+        </label>
+      </div>
+      <div *ngIf="selectedFileName" class="file-name">
+        Archivo seleccionado: {{ selectedFileName }}
+      </div>
+
+      <br>
+      <mat-divider></mat-divider>
+
+        <div class="container text-center mt-4">
+          <button mat-raised-button color="primary">Actualizar</button>
         </div>
       </form>
     </div>

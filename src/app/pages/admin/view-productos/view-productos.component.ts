@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 import { ProductoService } from './../../../services/producto.service';
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-view-productos',
@@ -15,9 +16,9 @@ export class ViewProductosComponent implements OnInit {
 
   nombreBuscar: string = '';
   productosPage: any;
-  displayedColumns: string[] = ['Nombre', 'Categoría', 'stock','Nivel', 'Precio Compra','Precio Venta','Precio Cotizacion','Acciones'];
+  displayedColumns: string[] = ['Imagen','Nombre', 'Sku','CostoCompra','Acciones'];
 
-  constructor(private productoService: ProductoService) { }
+  constructor(private productoService: ProductoService,private ModalService:ModalService) { }
 
   ngOnInit(): void {
     this.getProductos(this.currentPage);
@@ -34,6 +35,14 @@ export class ViewProductosComponent implements OnInit {
           console.error('Error al obtener productos', error);
         }
       );
+  }
+
+  abrirAddProducto(): void {
+    this.ModalService.openAddProductoModal();
+  }
+
+  abrirModalActualizar(productoId: any): void {
+    this.ModalService.openActualizarProducto(productoId);
   }
 
   nextPage(): void {

@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoriaService } from './../../../services/categoria.service';
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-add-categoria',
@@ -16,9 +17,15 @@ export class AddCategoriaComponent implements OnInit {
     descripcion : ''
   }
 
-  constructor(private categoriaService:CategoriaService,private snack:MatSnackBar,private router:Router) { }
+  constructor(private categoriaService:CategoriaService,private snack:MatSnackBar,private router:Router,
+    private ModalService:ModalService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  closeModal() {
+    this.ModalService.cerrarAddCategoria();
   }
 
   formSubmit(){
@@ -29,19 +36,22 @@ export class AddCategoriaComponent implements OnInit {
       return ;
     }
 
-    if(this.categoria.descripcion.trim() == '' || this.categoria.descripcion == null){
-      this.snack.open("La descripción es requerida !!",'',{
-        duration:3000
-      })
-      return ;
+    if (!this.categoria.descripcion || this.categoria.descripcion.trim() === '') {
+      this.snack.open("La descripción es requerida !!", '', {
+        duration: 3000,
+      });
+      return;
     }
 
     this.categoriaService.agregarCategoria(this.categoria).subscribe(
       (dato:any) => {
         this.categoria.titulo = '';
         this.categoria.descripcion = '';
-        Swal.fire('Categoría agregada','La categoría ha sido agregada con éxito','success');
-        this.router.navigate(['/admin/categorias']);
+        Swal.fire('Categoría agregada','La categoría ha sido agregada con éxito','success').then(() => {
+          this.closeModal();
+          window.location.reload();
+        });
+
       },
       (error) => {
         console.log(error);

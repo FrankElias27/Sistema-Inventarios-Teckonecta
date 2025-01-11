@@ -7,9 +7,10 @@ import { startWith, map } from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleCotizacionService } from 'src/app/services/detalle-cotizacion.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewDetalleCotizacionComponent } from '../view-detalle-cotizacion/view-detalle-cotizacion.component';
 
 @Component({
   selector: 'app-modal-detalle-cotizacion',
@@ -37,7 +38,10 @@ export class ModalDetalleCotizacionComponent implements OnInit {
   }
 
   constructor(private productoService: ProductoService,private modalService:ModalService,private snack: MatSnackBar,
-    private detalleCotizacionService:DetalleCotizacionService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any) { console.log(datas);}
+    private detalleCotizacionService:DetalleCotizacionService,private route:ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public datas: any,
+    public dialogRef: MatDialogRef<ViewDetalleCotizacionComponent>,
+    private dialogRef2: MatDialogRef<ModalDetalleCotizacionComponent>) { console.log(datas);}
 
   ngOnInit(): void {
     this.cotizacionId = this.datas.cotizacionId;
@@ -73,8 +77,8 @@ export class ModalDetalleCotizacionComponent implements OnInit {
     return producto && producto.nombre ? producto.nombre : '';
   }
 
-  closeModal() {
-    this.modalService.cerrarModalDetalleCotizacion();
+  closeModal(): void {
+    this.dialogRef2.close();  // Cierra el modal
   }
 
   GuardarDetalle() {
@@ -111,8 +115,7 @@ export class ModalDetalleCotizacionComponent implements OnInit {
       (data) => {
         Swal.fire('Producto guardado', 'El producto ha sido agregado con éxito', 'success').then(
           (e) => {
-            this.modalService.cerrarModalDetalleCotizacion();
-            location.reload()
+            this.dialogRef.close('actualizar');
           });
         // Puedes hacer otras acciones después de guardar exitosamente
       },

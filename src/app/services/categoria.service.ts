@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import baserUrl from './helper';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,10 @@ export class CategoriaService {
 
   public listarCategorias(){
     return this.http.get(`${baserUrl}/categoria/`);
+  }
+
+  public getCategorias(page: number): Observable<any> {
+    return this.http.get(`${baserUrl}/categoria/page/${page}`);
   }
 
   public agregarCategoria(categoria:any){

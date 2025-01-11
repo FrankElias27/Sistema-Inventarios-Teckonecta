@@ -1,76 +1,92 @@
-<div class = "bootstrap-wrapper">
-    <div class = "container">
-      <div class = "row" style = "margin-top : 20px;">
-        <div class = "col-md-6 offset-md-3">
-          <mat-card>
-          <div class="container text-center">
-            <img src="../../../assets/icon.png" width = "100" height = "100">
-          </div>
+<mat-card>
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Agregar Usuario</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
 
-          <h1 class="text-center">Registrate aqui</h1>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form [formGroup]="userForm" (ngSubmit)="formSubmit()">
 
-
-          <form [formGroup]="userForm" (ngSubmit)="formSubmit()">
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Nombre de usuario</mat-label>
-              <input formControlName="username" matInput placeholder="Digite su nombre de usuario">
-              <mat-error *ngIf="userForm.get('username')?.hasError('required')">
-                El nombre de usuario es requerido
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Contraseña</mat-label>
-              <input formControlName="password" type="password" matInput placeholder="Digite su contraseña">
-              <mat-error *ngIf="userForm.get('password')?.hasError('required')">
-                La contraseña es requerida
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Nombre</mat-label>
-              <input formControlName="nombre" matInput placeholder="Digite su nombre">
-              <mat-error *ngIf="userForm.get('nombre')?.hasError('required')">
-                El nombre es requerido
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Apellido</mat-label>
-              <input formControlName="apellido" matInput placeholder="Digite su apellido">
-              <mat-error *ngIf="userForm.get('apellido')?.hasError('required')">
-                El apellido es requerido
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Email</mat-label>
-              <input formControlName="email" type="email" matInput placeholder="Digite su email">
-              <mat-error *ngIf="userForm.get('email')?.hasError('required')">
-                El email es requerido
-              </mat-error>
-              <mat-error *ngIf="userForm.get('email')?.hasError('email')">
-                Ingrese un email válido
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Telefono</mat-label>
-              <input formControlName="telefono" matInput placeholder="Digite su telefono">
-              <mat-error *ngIf="userForm.get('telefono')?.hasError('required')">
-                El teléfono es requerido
-              </mat-error>
-            </mat-form-field>
-
-            <div class="container text-center">
-              <button class="rojo" mat-raised-button color="primary" >Registrar</button>
-              <button class="verde" type="reset" style="margin-left: 20px;" mat-raised-button color="accent">Limpiar</button>
-            </div>
-          </form>
-        </mat-card>
-          <br><br><br>
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+          <input
+          name="nombre"
+          type="text" id="nombre"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el nombre"
+          formControlName="nombre"
+          >
         </div>
-      </div>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+          <input
+          name="apellido"
+          type="text" id="apellido"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite los apellidos"
+          formControlName="apellido"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
+          <input
+          name="email"
+          type="email" id="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el correo"
+          formControlName="email"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+          <input
+          name="telefono"
+          type="text" id="telefono"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el teléfono"
+          formControlName="telefono"
+          >
+        </div>
+
+        <br>
+        <mat-card-subtitle style="text-align: center;">Detalles de la Cuenta</mat-card-subtitle>
+        <mat-divider></mat-divider>
+        <br>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+          <input
+          name="username"
+          type="text" id="username"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el Username "
+          formControlName="username"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+          <input
+          name="password"
+          type="password" id="password"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite la Contraseña"
+          formControlName="password"
+          >
+        </div>
+
+        <div class="container text-center">
+          <button mat-raised-button color="primary">Guardar</button>
+        </div>
+      </form>
     </div>
   </div>
+</mat-card>
 

@@ -18,6 +18,10 @@ export class ServicioService {
     return this.http.get<any[]>(`${baserUrl}/servicio/`);
   }
 
+  public getServicios(page: number): Observable<any> {
+    return this.http.get(`${baserUrl}/servicio/page/${page}`);
+  }
+
   public agregarServicio(servicio:any){
     return this.http.post(`${baserUrl}/servicio/`,servicio);
   }

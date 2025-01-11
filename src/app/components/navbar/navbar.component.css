@@ -1,13 +1,10 @@
-.example-spacer{
-  flex: 1 1 auto;
-}
-.navbar {
-  background-color: #f06a2d;
-}
-.blanco{
-  color: white;
+
+.margin{
+  margin: 1px 0px;
 }
 
-.mr20{
-  margin-right: 100px;
+.navbar-logged {
+  background: linear-gradient(135deg, rgba(255, 118, 55, 0.95), rgba(255, 118, 55, 0.95));
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
 }

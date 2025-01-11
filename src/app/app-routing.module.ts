@@ -39,6 +39,9 @@ import { ActualizarServicioComponent } from './pages/admin/actualizar-servicio/a
 import { ViewDetalleCotizacionComponent } from './pages/admin/view-detalle-cotizacion/view-detalle-cotizacion.component';
 import { ViewDetalleServicioComponent } from './pages/admin/view-detalle-servicio/view-detalle-servicio.component';
 import { SignupComponent } from './pages/admin/signup/signup.component';
+import { ViewUsuariosComponent } from './pages/admin/view-usuarios/view-usuarios.component';
+import { ViewInventariosComponent } from './pages/admin/view-inventarios/view-inventarios.component';
+import { ViewExistenciasComponent } from './pages/admin/view-existencias/view-existencias.component';
 
 const routes: Routes = [
   {
@@ -65,29 +68,25 @@ const routes: Routes = [
           component:WelcomeComponent
         },
         {
+          path:'usuarios',
+          component:ViewUsuariosComponent
+        },
+
+        {
+          path:'inventarios',
+          component:ViewInventariosComponent
+        },
+
+        {
           path:'categorias',
           component:ViewCategoriasComponent
         },
-        {
-          path:'add-categoria',
-          component:AddCategoriaComponent
-        },
-        {
-          path:'categoria/:categoriaId',
-          component:ActualizarCategoriaComponent
-        },
+
         {
           path:'productos',
           component:ViewProductosComponent
         },
-        {
-          path:'add-productos',
-          component:AddProductoComponent
-        },
-        {
-          path:'productos/:productoId',
-          component:ActualizarProductoComponent
-        },
+
         {
           path:'ver-salidas',
           component : ViewSalidasComponent
@@ -100,46 +99,27 @@ const routes: Routes = [
           path:'ventas',
           component : ViewVentasComponent
         },
-        {
-          path:'add-ventas',
-          component:AddVentasComponent
-        },
-        {
-          path:'ver-detalle/:ventaId/:cliente',
-          component:ViewDetalleComponent
-        },
+
         {
           path:'clientes',
           component:ViewClienteComponent
         },
-        {
-          path:'add-clientes',
-          component:AddClienteComponent
-        },
-        {
-          path:'clientes/:clienteId',
-          component:ActualizarClienteComponent
-        },
+
         {
           path:'proveedores',
           component:ViewProveedoresComponent
         },
-        {
-          path:'add-proveedores',
-          component:AddProveedoresComponent
-        },
-        {
-          path:'proveedores/:proveedorId',
-          component:ActualizarProveedorComponent
-        },
+
         {
           path:'compras',
           component : ViewComprasComponent
         },
+
         {
-          path:'ver-detalleCompra/:compraId/:proveedor',
-          component:ViewDetalleComprasComponent
+          path:'existencias',
+          component : ViewExistenciasComponent
         },
+
         {
           path:'ver-cotizaciones',
           component : ViewCotizacionesComponent
@@ -160,22 +140,11 @@ const routes: Routes = [
           path:'servicios/:servicioId',
           component:ActualizarServicioComponent
         },
-        {
-          path:'ver-detalle-cotizacion/:cotizacionId/:cliente',
-          component:ViewDetalleCotizacionComponent
-        },
+
         {
           path:'ver-detalle-servicio/:cotizacionId/:cliente',
           component:ViewDetalleServicioComponent
         },
-        {
-          path:'registro',
-          component:SignupComponent
-        },
-
-
-
-
 
 
     ]

@@ -1,15 +1,17 @@
 <mat-card>
-    <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <h1 style="text-align: center;margin-top: 40px;">Agregar nueva cotizacion al Sistema</h1>
-
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Agregar Cotización </mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <form (ngSubmit) = "guardarCotizacion()">
           <!-- Formulario de datos de la venta -->
           <mat-form-field class="w100" appearance="outline">
-            <input type="text" placeholder="Buscar Cliente" matInput [formControl]="clienteControl" [matAutocomplete]="auto" required>
+            <input  placeholder="Buscar Cliente" matInput [formControl]="clienteControl" [matAutocomplete]="auto" required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let cliente of filteredClientes| async" [value]="cliente">
                 {{ cliente.nombre }} {{ cliente.apellidoPaterno }} {{ cliente.apellidoMaterno }}
@@ -17,18 +19,14 @@
             </mat-autocomplete>
           </mat-form-field>
 
-          <mat-form-field class="w100" appearance="outline">
-            <mat-label>Asunto:</mat-label>
-            <textarea
-            name="descripcion"
-            matInput
-            required
-            placeholder="Digite el Asunto de la Cotizacion"
-            rows="6"
-            [(ngModel)] = "cotizacionData.asuntoCotizacion"
-            >
-            </textarea>
-          </mat-form-field>
+          <div class="mb-4">
+            <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asunto:</label>
+             <textarea id="descripcion" name="descripcion" [(ngModel)] = "cotizacionData.asuntoCotizacion"
+              rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+               rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Digite el asunto de la Cotización"></textarea>
+                </div>
 
           <div class="row">
             <div class="col-md-12">

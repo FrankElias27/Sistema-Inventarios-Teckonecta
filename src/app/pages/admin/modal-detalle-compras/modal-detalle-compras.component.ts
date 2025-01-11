@@ -7,9 +7,10 @@ import { startWith, map } from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleCompraService } from 'src/app/services/detalle-compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewDetalleComprasComponent } from '../view-detalle-compras/view-detalle-compras.component';
 
 @Component({
   selector: 'app-modal-detalle-compras',
@@ -26,8 +27,11 @@ export class ModalDetalleComprasComponent implements OnInit {
   proveedor:any;
 
   DetalleData:any = {
+    costoComprausd:'',
+    tipoCambio:'',
     cantidad:'',
     subtotal:'',
+    costoUnitarioSoles:'',
     producto:{
       productoId:''
     },
@@ -37,7 +41,10 @@ export class ModalDetalleComprasComponent implements OnInit {
   }
 
   constructor(private productoService: ProductoService,private modalService:ModalService,private snack: MatSnackBar,
-    private detalleCompraService:DetalleCompraService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any) { console.log(datas);}
+    private detalleCompraService:DetalleCompraService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any,
+    public dialogRef: MatDialogRef<ViewDetalleComprasComponent>,
+    private dialogRef2: MatDialogRef<ModalDetalleComprasComponent>
+  ) { console.log(datas);}
 
   ngOnInit(): void {
     this.compraId = this.datas.compraId;
@@ -73,19 +80,26 @@ export class ModalDetalleComprasComponent implements OnInit {
     return producto && producto.nombre ? producto.nombre : '';
   }
 
-  closeModal() {
-    this.modalService.cerrarModal3();
+  closeModal(): void {
+    this.dialogRef2.close();  // Cierra el modal
   }
 
   GuardarDetalle() {
-
-
+    
     // Obtener el producto seleccionado del autocompletado
     const productoSeleccionado = this.productoControl.value;
 
     // Verificar que productoSeleccionado tenga los datos necesarios
-    if (!productoSeleccionado || !productoSeleccionado.precioVenta) {
+    if (!productoSeleccionado || !productoSeleccionado.costoCompraUSD) {
       this.snack.open('Producto seleccionado incompleto o inválido', '',{
+        duration: 3000
+      });
+      return;
+    }
+
+    // Verificar que haya ingresado una cantidad válida
+    if (!this.DetalleData.tipoCambio || this.DetalleData.tipoCambio <= 0) {
+      this.snack.open('Tipo de cambio incompleto o inválido', '',{
         duration: 3000
       });
       return;
@@ -99,8 +113,12 @@ export class ModalDetalleComprasComponent implements OnInit {
       return;
     }
 
+    this.DetalleData.costoCompraUSD = productoSeleccionado.costoCompraUSD;
+
+    this.DetalleData.costoUnitarioSoles = (productoSeleccionado.costoCompraUSD*this.DetalleData.tipoCambio)/(this.DetalleData.cantidad);
+
     // Calcular el subtotal
-    const subtotal = this.DetalleData.cantidad * productoSeleccionado.precioCompra;
+    const subtotal = this.DetalleData.cantidad * this.DetalleData.costoUnitarioSoles;
 
     // Asignar valores al objeto DetalleData
     this.DetalleData.producto.productoId = productoSeleccionado.productoId;
@@ -113,8 +131,7 @@ export class ModalDetalleComprasComponent implements OnInit {
       (data) => {
         Swal.fire('Producto guardado', 'El producto ha sido agregado con éxito', 'success').then(
           (e) => {
-            this.modalService.cerrarModal2();
-            location.reload()
+            this.dialogRef.close('actualizar');
           });
         // Puedes hacer otras acciones después de guardar exitosamente
       },

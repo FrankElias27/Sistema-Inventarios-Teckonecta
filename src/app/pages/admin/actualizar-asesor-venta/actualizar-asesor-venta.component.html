@@ -1,0 +1,44 @@
+<mat-card>
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Actualizar Asesor de Venta</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <form *ngIf = "asesor" (submit) = "actualizarDatos()">
+
+          <div class="mb-4">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+            <input
+            name="nombre"
+            type="text" id="nombre"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Digite el nombre del Asesor"
+            [(ngModel)] = "asesor.nombre"
+            >
+          </div>
+
+
+          <div class="mb-4">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+            <input
+            name="telefono"
+            type="text" id="telefono"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Digite el teléfono de la empresa"
+            [(ngModel)]  = "asesor.telefono"
+            >
+          </div>
+
+
+          <div class="container text-center">
+            <button mat-raised-button color="primary">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card>
+

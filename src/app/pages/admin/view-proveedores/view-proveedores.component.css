@@ -4,7 +4,7 @@
     margin-bottom: 10px;
     margin-top: 10px; /* Espacio inferior para separar del contenido siguiente */
   }
-  
+
   .search-input {
     flex: 1; /* El input ocupa todo el espacio disponible */
     padding: 10px; /* Espaciado interno */
@@ -13,12 +13,12 @@
     border-radius: 5px; /* Bordes redondeados */
     transition: border-color 0.3s ease; /* Transición suave del color del borde */
   }
-  
+
   .search-input:focus {
     outline: none; /* Elimina el contorno al hacer foco */
     border-color: #1976d2; /* Color del borde al hacer foco */
   }
-  
+
   .custom-button {
     height: 40px; /* Altura del botón */
     padding: 0 20px; /* Espaciado interno horizontal */
@@ -32,11 +32,23 @@
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
     transition: background-color 0.3s ease; /* Transición suave del color de fondo */
-  
+
     /* Espaciado entre elementos adyacentes */
     margin-left: 10px; /* Margen izquierdo */
   }
   .w100{
     width: 100%;
   }
-  
+
+  .verde {
+    background-color: #4CAF50; /* Verde */
+    color: white; /* Color de texto blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 1px 10px; /* Padding para el contenido dentro del botón */
+    display: inline-flex; /* Permite que los elementos dentro del botón se alineen horizontalmente */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+  }
+
+  .verde mat-icon {
+    margin-right: 5px; /* Espacio entre el ícono y el texto */
+  }

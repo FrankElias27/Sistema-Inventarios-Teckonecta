@@ -1,0 +1,62 @@
+<div class="contenedor ">
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+      <div class="flex justify-between items-center px-4 py-4 w-full max-w-screen-md mx-auto ">
+        <input type="text" class="search-input flex-grow mr-2 p-2 border rounded-md min-w-[170px] md:max-w-full" placeholder="Bienvenido a la vista de Asesores de Venta">
+        <button  mat-raised-button color="primary" class="w-12 h-12 flex items-center justify-center" (click)="abrirModal()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div class=" overflow-x-auto  pr-[40px] pl-[40px] h-[480px]">
+        <table mat-table [dataSource]="asesores" class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400" style="text-align: center;">
+          <!-- Definición de columnas -->
+
+          <ng-container matColumnDef="IT.">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> IT. </th>
+            <td mat-cell *matCellDef="let asesor; let i = index" style="vertical-align: middle; min-width: 150px;">
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Asesor de Venta">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Asesor de Venta </th>
+            <td mat-cell *matCellDef="let asesor" style="vertical-align: middle; min-width: 150px;"> {{ asesor.nombre }} </td>
+          </ng-container>
+
+
+
+          <ng-container matColumnDef="Telefono">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Teléfono </th>
+            <td mat-cell *matCellDef="let asesor" style="vertical-align: middle; min-width: 150px;"> {{ asesor.telefono }} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Acciones </th>
+            <td mat-cell *matCellDef="let asesor" style="vertical-align: middle; text-align: center;">
+              <div class="flex justify-center space-x-2">
+                <button mat-flat-button color="primary" class="w-8 h-10 text-sm flex items-center justify-center" (click)="abrirModalActualizar(asesor.asesorId)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-flat-button color="warn" class="w-8 h-10 text-sm flex items-center justify-center" (click)="eliminarAsesor(asesor.asesorId)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Filas de la tabla -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+
+
+  <!-- Paginator -->
+</div>
+
+
+

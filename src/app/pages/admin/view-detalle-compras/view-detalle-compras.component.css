@@ -7,7 +7,7 @@
     margin-bottom: 10px;
     margin-top: 10px; /* Espacio inferior para separar del contenido siguiente */
   }
-  
+
   .search-input {
     flex: 1; /* El input ocupa todo el espacio disponible */
     padding: 10px; /* Espaciado interno */
@@ -16,7 +16,7 @@
     border-radius: 5px; /* Bordes redondeados */
     transition: border-color 0.3s ease; /* Transición suave del color del borde */
   }
-  
+
   .search-input:focus {
     outline: none; /* Elimina el contorno al hacer foco */
     border-color: #1976d2; /* Color del borde al hacer foco */
@@ -34,8 +34,19 @@
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
     transition: background-color 0.3s ease; /* Transición suave del color de fondo */
-  
+
     /* Espaciado entre elementos adyacentes */
     margin-left: 10px; /* Margen izquierdo */
   }
-  
+  .contenedor {
+    position: relative; /* Para usar la posición absoluta dentro del contenedor */
+    width: 100%; /* Ajusta el tamaño del contenedor si es necesario */
+    padding-bottom: 40px;
+  }
+
+  .close-button {
+    position: absolute; /* Coloca el botón en una posición absoluta dentro del contenedor */
+    top: 0; /* Coloca el botón en la parte superior */
+    right: 0; /* Alinea el botón a la derecha */
+    z-index: 1; /* Asegura que el botón esté por encima de otros elementos */
+  }

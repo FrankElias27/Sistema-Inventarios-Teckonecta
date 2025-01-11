@@ -4,6 +4,7 @@ import  Swal  from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-add-proveedores',
@@ -17,12 +18,17 @@ export class AddProveedoresComponent implements OnInit {
     direccion:'',
     ruc:'',
     correo: '',
-    telefono:''
+    telefono:'',
+    infoProductos:''
   }
 
-  constructor(private proveedorService:ProveedorService,private snack:MatSnackBar,private router:Router) { }
+  constructor(private proveedorService:ProveedorService,private snack:MatSnackBar,private router:Router,private ModalService:ModalService) { }
 
   ngOnInit(): void {
+  }
+
+  closeModal() {
+    this.ModalService.cerrarAddProveedor();
   }
 
   guardarProveedor() {
@@ -90,18 +96,19 @@ export class AddProveedoresComponent implements OnInit {
     this.proveedorService.agregarProveedor(this.proveedorData).subscribe(
       (data) => {
         console.log(data);
-        Swal.fire('Proveedor guardado', 'El proveedor ha sido guardado con éxito', 'success');
-        this.proveedorData = {
-          razonSocial: '',
-          ruc: '',
-          direccion: '',
-          correo: '',
-          telefono: ''
-        };
-        this.router.navigate(['/admin/proveedores']);
+        Swal.fire('Proveedor guardado', 'El proveedor ha sido guardado con éxito', 'success').then(() => {
+          this.closeModal();
+          window.location.reload();
+        });
       },
       (error) => {
-        Swal.fire('Error', 'Error al guardar el proveedor', 'error');
+        if (error.status === 400) {
+          // Mostrar el mensaje de error recibido desde el backend
+              Swal.fire('Error', error.error, 'error');
+        } else {
+          // Manejar otros errores
+              Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
+        }
       }
     );
   }

@@ -1,43 +1,64 @@
-<div class="container">
-    <mat-card class="example-card">
-      <img mat-card-image src="../../../../assets/grafico-de-barras.png" alt="Image">
-      <mat-card-title style="text-align: center;">Reporte de Existencias del Inventario</mat-card-title>
-      <mat-card-content>
-        <p class="centrar">
-            El "Reporte de Existencias del Inventario RojasConnect" proporciona una visión detallada y actualizada de los productos disponibles en el almacén.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="primary"(click)="descargarNormalPDF()">Generar Reporte</button>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="example-card">
-      <img mat-card-image src="../../../../assets/analitica.png" alt="Image">
-      <mat-card-title style="text-align: center;">Reporte de Existencias por Categoría</mat-card-title>
-      <mat-card-content>
-        <p class="centrar">
-            El "Reporte de Existencias por Categoría RojasConnect" ofrece una vista detallada de los productos disponibles en el inventario según sus categorías.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="primary"(click)="descargarPDF()">Generar Reporte</button>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="example-card">
-      <img mat-card-image src="../../../../assets/informe-financiero.png" alt="Image">
-      <mat-card-title style="text-align: center;">Reporte de Valoración Total del Inventario</mat-card-title>
-      <mat-card-content>
-        <p class="centrar">
-            Este reporte proporciona un análisis exhaustivo del valor monetario total de todos los productos almacenados en el inventario de la empresa.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="primary" (click)="descargarTotalPDF() ">Generar Reporte</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+<section class="bg-gray-50 dark:bg-gray-900 h-full">
+  <div class="lg:pt-[20px] w-full flex flex-col items-center justify-center px-6 py-8 sm:pl-[60px] mx-auto md:h-screen lg:py-0 bg-opacity-0">
+    <div class="w-full bg-white rounded-lg  dark:border md:mt-0 max-w-screen-xl xl:p-4 dark:bg-gray-800 dark:border-gray-700 bg-opacity-0">
 
 
+          <div class="grid gap-6 px-4 py-4 mx-auto max-w-screen-md grid-cols-1 sm:grid-cols-2  lg:grid-cols-2">
+          <div class="flex flex-col">
+            <mat-card class="example-card max-w-full">
+              <div class="flex items-center justify-center">
+                <img mat-card-image src="../../../../assets/grafico-de-barras.webp" alt="Image" class="w-auto h-auto max-w-full">
+              </div>
+              <mat-card-title class="text-center">Reporte de Existencias del Inventario</mat-card-title>
+              <mat-card-content>
+                <p class="centrar hidden md:hidden xl:block">
+                  El "Reporte de Existencias del Inventario Teccuida" proporciona una visión detallada y actualizada de los productos disponibles en el almacén.
+                </p>
+              </mat-card-content>
+              <div class="flex justify-center space-x-4 mt-4">
+                <button
+                  class="bg-red-500 text-white font-medium py-2 px-4 rounded hover:bg-red-600 transition duration-200"
+                  (click)="descargarNormalPDF()">
+                  PDF
+                </button>
+                <button
+                  class="bg-green-500 text-white font-medium py-2 px-4 rounded hover:bg-green-600 transition duration-200"
+                  (click)="descargarNormalEXCEL()">
+                  EXCEL
+                </button>
+              </div>
+            </mat-card>
+          </div>
 
+          <div class="flex flex-col">
+            <mat-card class="example-card max-w-full">
+              <div class="flex items-center justify-center">
+                <img mat-card-image src="../../../../assets/informe-financiero.webp" alt="Image" class="w-auto h-auto max-w-full">
+              </div>
+              <mat-card-title class="text-center">Reporte de Valoración Total del Inventario</mat-card-title>
+              <mat-card-content>
+                <p class="centrar hidden md:hidden xl:block">
+                  Este reporte proporciona un análisis exhaustivo del valor monetario total de todos los productos almacenados en el inventario de la empresa.
+                </p>
+              </mat-card-content>
+              <div class="flex justify-center space-x-4 mt-4">
+                <button
+                  class="bg-red-500 text-white font-medium py-2 px-4 rounded hover:bg-red-600 transition duration-200"
+                  (click)="descargarTotalPDF()">
+                  PDF
+                </button>
+                <button
+                  class="bg-green-500 text-white font-medium py-2 px-4 rounded hover:bg-green-600 transition duration-200"
+                  (click)="descargarTotalEXCEL()">
+                  EXCEL
+                </button>
+              </div>
+            </mat-card>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+</section>

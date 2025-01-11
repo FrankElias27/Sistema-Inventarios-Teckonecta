@@ -39,3 +39,37 @@
 .w100{
   width: 100%;
 }
+
+.estado-label {
+  display: inline-flex; /* Cambiar de inline-block a inline-flex */
+  align-items: center; /* Centra verticalmente el contenido */
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  gap: 8px; /* Espacio entre ícono y texto */
+}
+
+.estado-normal {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+}
+
+.estado-bajo {
+  background-color: #f44336; /* Rojo */
+  color: white;
+}
+
+.verde {
+  background-color: #4CAF50; /* Verde */
+  color: white; /* Color de texto blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 1px 10px; /* Padding para el contenido dentro del botón */
+  display: inline-flex; /* Permite que los elementos dentro del botón se alineen horizontalmente */
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
+}
+
+.verde mat-icon {
+  margin-right: 5px; /* Espacio entre el ícono y el texto */
+}

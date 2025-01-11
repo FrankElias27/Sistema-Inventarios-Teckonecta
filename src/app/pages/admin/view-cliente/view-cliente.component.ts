@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientesService } from '../../../services/clientes.service';
 import Swal from 'sweetalert2';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-view-cliente',
@@ -12,9 +13,11 @@ export class ViewClienteComponent implements OnInit {
   clientes: any[] = [];
   currentPage: number = 0;
 
-  displayedColumns: string[] = ['DNI', 'Cliente','Fecha de Nacimiento', 'Direccion','Correo','Telefono','Acciones'];
+  displayedColumns: string[] = ['DNI', 'Cliente', 'Tipo','Antiguedad','Telefono','Acciones'];
 
-  constructor(private ClientesService:ClientesService) { }
+  constructor(private ClientesService:ClientesService,
+    private ModalService:ModalService
+  ) { }
 
   ngOnInit(): void {
     this.getClientess(this.currentPage);
@@ -41,6 +44,14 @@ export class ViewClienteComponent implements OnInit {
     if (this.currentPage > 0) {
       this.getClientess(this.currentPage - 1);
     }
+  }
+
+  abrirAddCliente(): void {
+    this.ModalService.openAddClienteModal();
+  }
+
+  abrirModalActualizar(clienteId: any): void {
+    this.ModalService.openActualizarCliente(clienteId);
   }
 
   eliminarCliente(clienteId: any) {

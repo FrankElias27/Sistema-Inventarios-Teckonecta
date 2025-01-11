@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { DetalleCotizacionService } from 'src/app/services/detalle-cotizacion.se
 import { CotizacionService } from 'src/app/services/cotizacion.service';
 import { DetalleServicioService } from 'src/app/services/detalle-servicio.service';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-detalle-servicio',
@@ -31,10 +32,11 @@ export class ViewDetalleServicioComponent implements OnInit {
   productos:any[]=[];
 
   constructor(private detalleService:DetalleServicioService, private modalService:ModalService,
-    private route:ActivatedRoute,private cotizacionService:CotizacionService,private router:Router, private servicioService:ServicioService) { }
+    private route:ActivatedRoute,private cotizacionService:CotizacionService,private router:Router,
+    private servicioService:ServicioService,@Inject(MAT_DIALOG_DATA) public datas: any) { }
 
   ngOnInit(): void {
-    this.cotizacionId = this.route.snapshot.params['cotizacionId'];
+    this.cotizacionId = this.datas.cotizacionId;
     this.cliente = this.route.snapshot.params['cliente'];
     this.detalleService.listarDetalleServicio(this.cotizacionId).subscribe(
       (data:any) => {
@@ -56,14 +58,34 @@ export class ViewDetalleServicioComponent implements OnInit {
     )
   }
 
-  abrirModal(): void {
-    this.cotizacionId = this.route.snapshot.params['cotizacionId'];
-    this.modalService.openNuevoServicioModal(this.cotizacionId);
+  cargarDetalles(): void {
+    this.detalleService.listarDetalleServicio(this.cotizacionId).subscribe(
+      (data:any) => {
+        console.log(data);
+        this.detalle = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  
+  CloseModal(): void {
+    this.modalService.cerrarViewDetalleServicios();
+  }
 
-  eliminarDetalle(detalleServicioId: any) {
+  abrirModal(): void {
+    this.cotizacionId = this.datas.cotizacionId;
+    this.modalService.openNuevoServicioModal(this.cotizacionId).subscribe(result => {
+      if (result === 'actualizar') {
+        this.cargarDetalles();  // Recarga la tabla si el modal ha sido guardado o actualizado
+      }
+    });
+  }
+
+
+
+  eliminarDetalle(detalleServiciosId: any) {
     Swal.fire({
       title: 'Eliminar detalle',
       text: '¿Estás seguro de eliminar el detalle?',
@@ -75,13 +97,11 @@ export class ViewDetalleServicioComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.detalleService.eliminarDetalle(detalleServicioId).subscribe(
+        this.detalleService.eliminarDetalle(detalleServiciosId).subscribe(
           (data) => {
-            this.detalle = this.detalle.filter((detalles: any) => detalles.detalleId != detalleServicioId);
-            Swal.fire('Detalle eliminado', 'El detalle ha sido eliminado de la base de datos', 'success').then(
-              (e) => {
-                location.reload()
-              });
+            this.detalle = this.detalle.filter((detalles: any) => detalles.detalleId != detalleServiciosId);
+            this.detalle = this.detalle.filter((detalles: any) => detalles.detalleServiciosId !== detalleServiciosId);
+            Swal.fire('Detalle eliminado', 'El detalle ha sido eliminado de la base de datos', 'success')
           },
           (error) => {
             Swal.fire('Error', 'Error al eliminar el detalle', 'error');
@@ -96,17 +116,17 @@ export class ViewDetalleServicioComponent implements OnInit {
     try {
       // Calcular el total de los subtotales
       this.SumaDeSubTotales = 0;
-  
+
       this.detalle.forEach((detalles: any) => {
         this.SumaDeSubTotales += Number(detalles.subtotal);
       });
-  
+
       // Actualizar el subtotal de servicios en la cotización
       this.cotizacion.subTotalServicios = this.SumaDeSubTotales.toFixed(2);
-  
+
       // Actualizar el estado de la cotización
-      this.cotizacion.estadoCotizacion = "FALTA PROCESAR";
-  
+      this.cotizacion.estadoCotizacion = "FALTAPROCESAR";
+
       // Llamar al servicio para actualizar la cotización
       this.cotizacionService.actualizarCotizacion(this.cotizacion).subscribe(
         (data) => {
@@ -116,8 +136,9 @@ export class ViewDetalleServicioComponent implements OnInit {
             icon: 'success',
             confirmButtonText: 'Aceptar'
           }).then(() => {
-            console.log('Cotización actualizada con éxito:', data);
-            this.router.navigate(['/admin/ver-cotizacion-teccuida']);
+
+            this.CloseModal();
+             window.location.reload();
           });
         },
         (error) => {

@@ -1,0 +1,13 @@
+.estado-label {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.estado-normal {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+}

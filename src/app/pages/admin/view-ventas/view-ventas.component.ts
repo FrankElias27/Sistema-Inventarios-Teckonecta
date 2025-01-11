@@ -21,12 +21,17 @@ export class ViewVentasComponent implements OnInit {
   ngOnInit(): void {
     this.getVentass(this.currentPage);
   }
-  abrirModal(): void {
+
+  abrirModalVenta(): void {
     this.modalService.openNuevoVentaModal();
   }
 
   abrirModalActualizar(ventaId:any): void {
     this.modalService.openVentaModalActualizar(ventaId);
+  }
+
+  abrirModalDetalle(compraId:any): void {
+    this.modalService.openViewDetalleVentaModal(compraId);
   }
 
   getVentass(page: number): void {

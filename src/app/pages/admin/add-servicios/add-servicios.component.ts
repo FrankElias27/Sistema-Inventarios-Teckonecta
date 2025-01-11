@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoriaService } from './../../../services/categoria.service';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-add-servicios',
@@ -12,15 +13,21 @@ import { ServicioService } from 'src/app/services/servicio.service';
 })
 export class AddServiciosComponent implements OnInit {
 
- 
+
   servicio = {
     nombreServicio : '',
     precioServicio : ''
   }
 
-  constructor(private servicioService:ServicioService,private snack:MatSnackBar,private router:Router) { }
+  constructor(private servicioService:ServicioService,private snack:MatSnackBar,private router:Router
+    , private ModalService:ModalService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  closeModal() {
+    this.ModalService.cerrarAddServicio();
   }
 
   formSubmit(){
@@ -35,8 +42,10 @@ export class AddServiciosComponent implements OnInit {
       (dato:any) => {
         this.servicio.nombreServicio = '';
         this.servicio.precioServicio= '';
-        Swal.fire('Servicio agregado','El servicio ha sido agregada con éxito','success');
-        this.router.navigate(['/admin/servicios']);
+        Swal.fire('Servicio agregado','El servicio ha sido agregada con éxito','success').then(() => {
+          this.closeModal();
+          window.location.reload();
+        });
       },
       (error) => {
         console.log(error);

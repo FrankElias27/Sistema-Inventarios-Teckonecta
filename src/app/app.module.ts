@@ -78,6 +78,18 @@ import { ActualizarCotizacionComponent } from './pages/admin/actualizar-cotizaci
 import { SignupComponent } from './pages/admin/signup/signup.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatOptionModule } from '@angular/material/core';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { ViewUsuariosComponent } from './pages/admin/view-usuarios/view-usuarios.component';
+import { ModalAsesorVentaComponent } from './pages/admin/modal-asesor-venta/modal-asesor-venta.component';
+import { AddAsesorVentaComponent } from './pages/admin/add-asesor-venta/add-asesor-venta.component';
+import { ActualizarAsesorVentaComponent } from './pages/admin/actualizar-asesor-venta/actualizar-asesor-venta.component';
+import { ViewInventariosComponent } from './pages/admin/view-inventarios/view-inventarios.component';
+import { AddInventarioComponent } from './pages/admin/add-inventario/add-inventario.component';
+import { ActualizarInventarioComponent } from './pages/admin/actualizar-inventario/actualizar-inventario.component';
+import { ModalProcesarCompraComponent } from './pages/admin/modal-procesar-compra/modal-procesar-compra.component';
+import { ModalProcesarVentaComponent } from './pages/admin/modal-procesar-venta/modal-procesar-venta.component';
+import { ViewExistenciasComponent } from './pages/admin/view-existencias/view-existencias.component';
+import { AddExistenciaComponent } from './pages/admin/add-existencia/add-existencia.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,7 +144,19 @@ import { MatOptionModule } from '@angular/material/core';
     ModalProcesarCotizacionComponent,
     ModalGenerarCotizacionComponent,
     ActualizarCotizacionComponent,
-    SignupComponent
+    SignupComponent,
+    CapitalizePipe,
+    ViewUsuariosComponent,
+    ModalAsesorVentaComponent,
+    AddAsesorVentaComponent,
+    ActualizarAsesorVentaComponent,
+    ViewInventariosComponent,
+    AddInventarioComponent,
+    ActualizarInventarioComponent,
+    ModalProcesarCompraComponent,
+    ModalProcesarVentaComponent,
+    ViewExistenciasComponent,
+    AddExistenciaComponent
 
 
   ],

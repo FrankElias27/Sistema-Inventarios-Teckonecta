@@ -15,7 +15,7 @@ export class ViewComprasComponent implements OnInit {
   compras: any[] = [];
   currentPage: number = 0;
 
-  displayedColumns: string[] = ['Cliente', 'Fecha de la Venta','Ver Detalle de la Venta', 'Cantidad de Productos', 'Estado','Total a Pagar','Acciones'];
+  displayedColumns: string[] = ['Proveedor', 'Fecha de la Compra','Ver Detalle de la Compra', 'Cantidad de Productos', 'Estado','Total a Pagar','Acciones'];
 
   constructor(private modalService: ModalService, private ComprasService:ComprasService) { }
 
@@ -29,6 +29,10 @@ export class ViewComprasComponent implements OnInit {
 
   abrirModalActualizar(compraId:any): void {
     this.modalService.openCompraModalActualizar(compraId);
+  }
+
+  abrirModalDetalle(compraId:any): void {
+    this.modalService.openViewDetalleModal(compraId);
   }
 
   getComprass(page: number): void {

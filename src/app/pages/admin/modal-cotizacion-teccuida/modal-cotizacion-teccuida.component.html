@@ -1,9 +1,11 @@
 <mat-card>
-    <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <h1 style="text-align: center; margin-top: 40px;">Agregar Tipo de Cambio para la Cotización</h1>
-  
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Agregar Tipo de Cambio para la Cotización</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <form [formGroup]="tipoCambioForm" (ngSubmit)="onSubmit()">
@@ -12,7 +14,6 @@
               <mat-form-field class="w70" appearance="outline">
                 <mat-label>Tipo de Cambio del Dólar a Soles</mat-label>
                 <input
-                  type="text"
                   formControlName="tipoCambio"
                   required
                   placeholder="Digite el tipo de cambio"

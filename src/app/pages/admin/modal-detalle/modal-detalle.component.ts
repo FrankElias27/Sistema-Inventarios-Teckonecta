@@ -7,8 +7,9 @@ import { startWith, map } from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewDetalleComponent } from '../view-detalle/view-detalle.component';
 
 @Component({
   selector: 'app-modal-detalle',
@@ -26,6 +27,9 @@ export class ModalDetalleComponent implements OnInit {
 
   DetalleData:any = {
     cantidad:'',
+    costoUnitario:'',
+    tipodeCambio:'',
+    utilidad:'',
     subtotal:'',
     producto:{
       productoId:''
@@ -36,7 +40,9 @@ export class ModalDetalleComponent implements OnInit {
   }
 
   constructor(private productoService: ProductoService,private modalService:ModalService,private snack: MatSnackBar,
-    private detalleVentaService:DetalleVentaService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any) { console.log(datas);}
+    private detalleVentaService:DetalleVentaService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any,
+  public dialogRef: MatDialogRef<ViewDetalleComponent>,
+  private dialogRef2: MatDialogRef<ModalDetalleComponent>) { console.log(datas);}
 
   ngOnInit(): void {
     this.ventaId = this.datas.ventaId;
@@ -72,8 +78,8 @@ export class ModalDetalleComponent implements OnInit {
     return producto && producto.nombre ? producto.nombre : '';
   }
 
-  closeModal() {
-    this.modalService.cerrarModal2();
+  closeModal(): void {
+    this.dialogRef2.close();  // Cierra el modal
   }
 
   GuardarDetalle() {
@@ -81,7 +87,7 @@ export class ModalDetalleComponent implements OnInit {
     const productoSeleccionado = this.productoControl.value;
 
     // Verificar que productoSeleccionado tenga los datos necesarios
-    if (!productoSeleccionado || !productoSeleccionado.precioVenta) {
+    if (!productoSeleccionado || !productoSeleccionado.costoCompraUSD) {
       this.snack.open('Producto seleccionado incompleto o inválido', '',{
         duration: 3000
       });
@@ -96,8 +102,11 @@ export class ModalDetalleComponent implements OnInit {
       return;
     }
 
+
+    this.DetalleData.costoUnitario = (((productoSeleccionado.costoCompraUSD*1.18)*this.DetalleData.tipodeCambio)/(1-(this.DetalleData.utilidad/100))).toFixed(2);;
+    
     // Calcular el subtotal
-    const subtotal = this.DetalleData.cantidad * productoSeleccionado.precioVenta;
+    const subtotal = this.DetalleData.cantidad * this.DetalleData.costoUnitario;
 
     // Asignar valores al objeto DetalleData
     this.DetalleData.producto.productoId = productoSeleccionado.productoId;
@@ -110,8 +119,7 @@ export class ModalDetalleComponent implements OnInit {
       (data) => {
         Swal.fire('Producto guardado', 'El producto ha sido agregado con éxito', 'success').then(
           (e) => {
-            this.modalService.cerrarModal2();
-            location.reload()
+            this.dialogRef.close('actualizar');
           });
         // Puedes hacer otras acciones después de guardar exitosamente
       },

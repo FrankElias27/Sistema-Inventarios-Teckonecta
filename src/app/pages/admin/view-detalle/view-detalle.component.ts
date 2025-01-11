@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import  Swal  from 'sweetalert2';
 import { ProductoService } from 'src/app/services/producto.service';
 import { forkJoin } from 'rxjs';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-detalle',
@@ -16,7 +17,7 @@ export class ViewDetalleComponent implements OnInit {
   ventaId:any;
   cliente:any;
   detalle:any = [];
-  displayedColumns: string[] = ['producto', 'cantidad', 'precioUnitario', 'subtotal','Acciones'];
+  displayedColumns: string[] = ['IT.','producto', 'costoCompra','tipoCambio','cantidad', 'costoSoles','utilidad', 'subtotal','Acciones'];
   detalles: any[] = []; // Asumiendo que detalle es tu array de objetos con los detalles
   totalAPagar: number = 0; // Variable para almacenar el total a pagar
   venta:any;
@@ -26,10 +27,11 @@ export class ViewDetalleComponent implements OnInit {
 
 
   constructor(private detalleService:DetalleVentaService, private modalService:ModalService,
-    private route:ActivatedRoute,private ventasService:VentaService,private router:Router, private productoService:ProductoService) { }
+    private route:ActivatedRoute,private ventasService:VentaService,private router:Router, private productoService:ProductoService,
+  @Inject(MAT_DIALOG_DATA) public data: any,) { }
 
   ngOnInit(): void {
-    this.ventaId = this.route.snapshot.params['ventaId'];
+    this.ventaId = this.data.ventaId;
     this.cliente = this.route.snapshot.params['cliente'];
     this.detalleService.listarDetalleVenta(this.ventaId).subscribe(
       (data:any) => {
@@ -52,123 +54,50 @@ export class ViewDetalleComponent implements OnInit {
 
   }
 
-  abrirModal(): void {
-    this.ventaId = this.route.snapshot.params['ventaId'];
-    this.modalService.openVentaModal(this.ventaId);
+  cargarDetalles(): void {
+    this.detalleService.listarDetalleVenta(this.ventaId).subscribe(
+      (data:any) => {
+        console.log(data);
+        this.detalle = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  procesarDetalle() {
-    // Calcular el total de los subtotales
-    this.totalAPagar = 0;
-    this.cantidadTotal = 0;
-
-    this.detalle.forEach((detalles: any) => {
-      this.totalAPagar += Number(detalles.subtotal);
+  abrirModal(): void {
+    this.ventaId = this.data.ventaId;
+    this.modalService.openVentaModal(this.ventaId).subscribe(result => {
+      if (result === 'actualizar') {
+        this.cargarDetalles();  // Recarga la tabla si el modal ha sido guardado o actualizado
+      }
     });
+  }
 
-    this.venta.totalaPagar = this.totalAPagar.toFixed(2);
+  closeModal(): void {
+    this.modalService.cerrarViewDetalleVenta();
+  }
 
-    this.detalle.forEach((detalles: any) => {
-      this.cantidadTotal += Number(detalles.cantidad);
-    });
-
-    this.venta.numTotaldeDetalleVenta = this.cantidadTotal;
-
-    this.venta.estado="PROCESADO";
-
-    this.calcularCantidadPorProducto();
-
-    // Llamar a obtener productos necesarios y esperar a que termine
-    this.obtenerProductosNecesarios()
-      .then(() => {
-        // Llamar al servicio para actualizar ventas
-        return this.ventasService.actualizarVentas(this.venta).toPromise();
-      })
-      .then((data) => {
-        Swal.fire('Venta actualizada', 'La venta ha sido actualizada con éxito', 'success').then(() => {
-          console.log('Venta actualizada con éxito:', data);
-          this.router.navigate(['/admin/ventas']);
+  procesarDetalle():void {
+      if (this.venta.estado === 'PROCESADO') {
+        Swal.fire({
+          title: 'Venta ya procesada',
+          text: 'Esta venta ya ha sido procesada y no se pueden realizar cambios.',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
         });
-      })
-      .catch((error) => {
-        Swal.fire('Error en el sistema', 'No se ha podido actualizar la venta', 'error');
-        console.error('Error al actualizar venta:', error);
+        return; // Salir del método si la compra ya está procesada
+      }
+
+      this.ventaId = this.data.ventaId;
+      this.modalService.openProcesarVenta(this.ventaId).subscribe(result => {
+        if (result === 'actualizar') {
+          this.cargarDetalles();  // Recarga la tabla si el modal ha sido guardado o actualizado
+        }
       });
 
-    console.log('Total a pagar:', this.totalAPagar); // Solo para propósitos de demostración
-  }
-
-  calcularCantidadPorProducto() {
-    this.detalle.forEach((detalle: any) => {
-      const productoId = detalle.producto.productoId;
-      const cantidad = Number(detalle.cantidad); // Convertir a número
-
-      if (!isNaN(cantidad)) { // Verificar que sea un número válido
-        if (this.cantidadPorProducto[productoId]) {
-          this.cantidadPorProducto[productoId] += cantidad;
-        } else {
-          this.cantidadPorProducto[productoId] = cantidad;
-        }
-      }
-    });
-
-    console.log('Cantidad por producto:', this.cantidadPorProducto);
-  }
-
-  obtenerProductosNecesarios(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // Crear un arreglo de observables para obtener los productos
-      const observables = [];
-
-      for (const productoId in this.cantidadPorProducto) {
-        if (this.cantidadPorProducto.hasOwnProperty(productoId)) {
-          // Obtener el producto con el productoId actual
-          const observable = this.productoService.obtenerProductos(productoId);
-          observables.push(observable);
-        }
-      }
-
-      // Esperar a que todos los observables se completen usando forkJoin
-      forkJoin(observables).subscribe(
-        (productos: any[]) => {
-          this.productos = productos;
-          console.log('Productos obtenidos:', this.productos);
-
-          this.restarCantidades();
-          resolve(); // Resuelve la promesa cuando las cantidades se restan
-        },
-        (error) => {
-          reject(error); // Rechaza la promesa si hay un error
-        }
-      );
-    });
-  }
-
-  restarCantidades() {
-    const observables = [];
-
-    for (const productoId in this.cantidadPorProducto) {
-      if (this.cantidadPorProducto.hasOwnProperty(productoId)) {
-        const cantidadRestar = this.cantidadPorProducto[productoId];
-
-        // Encontrar el producto correspondiente en this.productos basado en productoId
-        const productoIndex = this.productos.findIndex(p => p.productoId === parseInt(productoId));
-
-        if (productoIndex !== -1) {
-          // Restar la cantidad al stockActual del producto encontrado
-          this.productos[productoIndex].stock -= cantidadRestar;
-
-          // Agregar el observable de actualización del producto al arreglo
-          observables.push(this.productoService.actualizarProductos(this.productos[productoIndex]));
-        } else {
-          console.warn(`No se encontró el producto con productoId ${productoId}`);
-        }
-      }
     }
-
-    // Ejecutar las actualizaciones secuencialmente usando forkJoin
-    return forkJoin(observables).toPromise(); // Asegurarse de devolver una promesa
-  }
 
   eliminarDetalle(detalleVentaId: any) {
     Swal.fire({
@@ -185,10 +114,8 @@ export class ViewDetalleComponent implements OnInit {
         this.detalleService.eliminarDetalle(detalleVentaId).subscribe(
           (data) => {
             this.detalle = this.detalle.filter((detalles: any) => detalles.detalleId != detalleVentaId);
-            Swal.fire('Detalle eliminado', 'El detalle ha sido eliminado de la base de datos', 'success').then(
-              (e) => {
-                location.reload()
-              });
+            this.detalle = this.detalle.filter((detalles: any) => detalles.detalleVentaId !== detalleVentaId);
+            Swal.fire('Detalle eliminado', 'El detalle ha sido eliminado de la base de datos', 'success')
           },
           (error) => {
             Swal.fire('Error', 'Error al eliminar el detalle', 'error');

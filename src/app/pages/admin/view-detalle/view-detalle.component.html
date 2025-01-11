@@ -1,35 +1,71 @@
-<div class="search-container">
-  <input type="text"  placeholder="" class="search-input">
-  <button mat-raised-button color="primary" class="custom-button" (click)="abrirModal()" >Agregar Productos</button>
+<div class="contenedor ">
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
-<div class="table-responsive w100">
-  <table mat-table [dataSource]="detalle" class="mat-elevation-z8 w100" style="text-align: center;">
+
+<div class="flex justify-between items-center px-4 py-4 w-full max-w-screen-md mx-auto ">
+  <input type="text" class="search-input flex-grow mr-2 p-2 border rounded-md min-w-[170px] md:max-w-full" placeholder="Bienvenido a la vista de Detalle Venta">
+  <button  mat-raised-button color="primary" class="w-12 h-12 flex items-center justify-center" (click)="abrirModal()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<div class=" overflow-x-auto  pr-[40px] pl-[40px] h-[480px]">
+  <table mat-table [dataSource]="detalle" class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400" style="text-align: center;">
     <!-- Definición de columnas -->
+
+    <ng-container matColumnDef="IT.">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> IT. </th>
+      <td mat-cell *matCellDef="let detalle; let i = index" style="vertical-align: middle; min-width: 150px;">
+        {{ i + 1 }}
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="producto">
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Producto </th>
-      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;"> {{ detalle.producto.nombre }} </td>
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Producto</th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> {{ detalle.producto.nombre }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="costoCompra">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Costo Compra ($) </th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> ${{ detalle.producto.costoCompraUSD }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tipoCambio">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Tipo de Cambio </th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> {{ detalle.tipodeCambio }} </td>
     </ng-container>
 
     <ng-container matColumnDef="cantidad">
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Cantidad</th>
-      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;"> #{{ detalle.cantidad }} </td>
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Cantidad</th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> {{ detalle.cantidad }} </td>
     </ng-container>
 
-
-    <ng-container matColumnDef="precioUnitario" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;">Precio Unitario</th>
-      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;"> s/.{{ detalle.producto.precioVenta }} </td>
+    <ng-container matColumnDef="costoSoles">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Costo Unitario (s/.) </th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> s/.{{ detalle.costoUnitario }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="subtotal" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;">Subtotal</th>
-      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;"> s/.{{ detalle.subtotal }} </td>
+    <ng-container matColumnDef="utilidad">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Utilidad (%) </th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> {{ detalle.utilidad }} %</td>
     </ng-container>
 
-    <ng-container matColumnDef="Acciones" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Acciones </th>
-      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle;">
-        <button mat-flat-button color="warn" class="ml10" (click)="eliminarDetalle(detalle.detalleVentaId)">Eliminar</button>
+    <ng-container matColumnDef="subtotal">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Subtotal (s/.)</th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; min-width: 150px;"> s/.{{ detalle.subtotal }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Acciones </th>
+      <td mat-cell *matCellDef="let detalle" style="vertical-align: middle; text-align: center;">
+        <div class="flex justify-center space-x-2">
+
+          <button mat-flat-button color="warn" class="w-8 h-10 text-sm flex items-center justify-center" (click)="eliminarDetalle(detalle.detalleVentaId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
 
@@ -37,7 +73,12 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+
+
+<!-- Paginator -->
 </div>
+
 <div class="container text-center mt10">
   <button  mat-raised-button color="primary" type="submit" (click)="procesarDetalle()" >Procesar Detalle</button>
 </div>

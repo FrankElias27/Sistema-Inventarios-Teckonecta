@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientesService } from '../../../services/clientes.service';
 import Swal from 'sweetalert2';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-view-proveedores',
@@ -9,16 +10,17 @@ import { ProveedorService } from 'src/app/services/proveedor.service';
   styleUrls: ['./view-proveedores.component.css']
 })
 export class ViewProveedoresComponent implements OnInit {
+
   proveedores: any[] = [];
   currentPage: number = 0;
+  displayedColumns: string[] = ['RUC', 'RazonSocial', 'Asesor de Venta','¿Que Vende?','Acciones'];
 
-  displayedColumns: string[] = ['DNI', 'Cliente', 'Direccion','Correo','Telefono','Acciones'];
-
-  constructor(private ProveedorService:ProveedorService) { }
+  constructor(private ProveedorService:ProveedorService,private ModalService:ModalService) { }
 
   ngOnInit(): void {
     this.getProveedoress(this.currentPage);
   }
+
   getProveedoress(page: number): void {
     this.ProveedorService.getProveedores(page)
       .subscribe(
@@ -30,6 +32,18 @@ export class ViewProveedoresComponent implements OnInit {
           console.error('Error al obtener proveedores', error);
         }
       );
+  }
+
+  abrirAddProveedor(): void {
+    this.ModalService.openAddProveedorModal();
+  }
+
+  abrirAddAsesor(proveedorId: any): void {
+    this.ModalService.openViewAsesorModal(proveedorId);
+  }
+
+  abrirModalActualizar(proveedorId: any): void {
+    this.ModalService.openActualizarProveedor(proveedorId);
   }
 
   nextPage(): void {

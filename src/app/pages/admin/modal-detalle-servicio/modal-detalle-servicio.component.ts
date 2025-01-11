@@ -7,11 +7,12 @@ import { startWith, map } from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
 import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleCotizacionService } from 'src/app/services/detalle-cotizacion.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { DetalleServicioService } from 'src/app/services/detalle-servicio.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewDetalleServicioComponent } from '../view-detalle-servicio/view-detalle-servicio.component';
 
 @Component({
   selector: 'app-modal-detalle-servicio',
@@ -38,7 +39,9 @@ export class ModalDetalleServicioComponent implements OnInit {
   }
 
   constructor(private servicioService: ServicioService,private modalService:ModalService,private snack: MatSnackBar,
-    private detalleServicioService:DetalleServicioService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any) { console.log(datas);}
+    private detalleServicioService:DetalleServicioService,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public datas: any,
+    public dialogRef: MatDialogRef<ViewDetalleServicioComponent>,
+    private dialogRef2: MatDialogRef<ModalDetalleServicioComponent>) { console.log(datas);}
 
   ngOnInit(): void {
     this.cotizacionId = this.datas.cotizacionId;
@@ -74,8 +77,8 @@ export class ModalDetalleServicioComponent implements OnInit {
     return servicio && servicio.nombreServicio ? servicio.nombreServicio : '';
   }
 
-  closeModal() {
-    this.modalService.cerrarServicioModal();
+  closeModal(): void {
+    this.dialogRef2.close();  // Cierra el modal
   }
 
   GuardarDetalle() {
@@ -98,8 +101,7 @@ export class ModalDetalleServicioComponent implements OnInit {
       (data) => {
         Swal.fire('Servicio guardado', 'El servicio ha sido agregado con éxito', 'success').then(
           (e) => {
-            this.modalService.cerrarServicioModal();
-            location.reload()
+            this.dialogRef.close('actualizar');
           });
         // Puedes hacer otras acciones después de guardar exitosamente
       },

@@ -28,8 +28,7 @@ export class ModalCotizacionComponent implements OnInit {
     asuntoCotizacion:'',
     numTotaldeDetalle: '',
     estadoCotizacion:'',
-    total: '',
-    activo: true,
+    total: ''
   };
 
   clienteControl = new FormControl();
@@ -88,22 +87,8 @@ export class ModalCotizacionComponent implements OnInit {
 
     const clienteSeleccionado = this.clienteControl.value;
 
-    // Verifica si hay una fecha en cotizacionData y si es válida
-  if (this.cotizacionData.fechaCotizacion) {
-    // Transforma la fecha usando DatePipe
-    const formattedDate = this.datePipe.transform(this.cotizacionData.fechaCotizacion, 'dd/MM/yyyy');
-
-    // Maneja el caso en que formattedDate podría ser null
-    if (formattedDate !== null) {
-      this.cotizacionData.fechaCotizacion = formattedDate;
-    } else {
-      // Si el formato es null, puedes manejar el error o asignar un valor predeterminado
-      this.cotizacionData.fechaCotizacion = 'Fecha inválida'; // o cualquier valor predeterminado que prefieras
-    }
-  }
-
     this.cotizacionData.cliente.clienteId=clienteSeleccionado.clienteId;
-    this.cotizacionData.estadoCotizacion="RECIEN CREADO";
+    this.cotizacionData.estadoCotizacion="RECIENCREADO";
 
     console.log(this.cotizacionData);
     if (!this.cotizacionData.cliente || Object.keys(this.cotizacionData.cliente).length === 0) {

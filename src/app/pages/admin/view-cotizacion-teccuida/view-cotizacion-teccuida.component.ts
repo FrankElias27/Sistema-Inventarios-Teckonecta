@@ -17,7 +17,7 @@ export class ViewCotizacionTeccuidaComponent implements OnInit {
   cotizaciones: any[] = [];
   currentPage: number = 0;
 
-  displayedColumns: string[] = ['Cliente', 'Fecha de la Cotizacion','Ver Detalle de la Cotizacion', 'Ver Detalle de los Servicios','Cotizacion','Estado','Total','Acciones'];
+  displayedColumns: string[] = ['Cliente', 'Fecha de la Cotizacion','Ver Detalle de la Cotizacion','Cotizacion','Estado','Total','Acciones'];
 
   constructor(private route:ActivatedRoute,private cotizacionService: CotizacionService,private datePipe: DatePipe,private modalService: ModalService) { }
 
@@ -53,11 +53,19 @@ export class ViewCotizacionTeccuidaComponent implements OnInit {
     this.modalService.openActualizarCotizacion(cotizacionId);
   }
 
+  abrirDetalleCotizacion(cotizacionId:any): void {
+    this.modalService.openViewDetalleCotizacion(cotizacionId);
+  }
+
+  abrirDetalleServicios(cotizacionId:any): void {
+    this.modalService.openViewDetalleServicios(cotizacionId);
+  }
+
 
   eliminarCotizacion(cotizacionId: any) {
     Swal.fire({
-      title: 'Eliminar cotizacion',
-      text: '¿Estás seguro de eliminar la cotizacion?',
+      title: 'Eliminar cotización',
+      text: '¿Estás seguro de eliminar la cotización?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

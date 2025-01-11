@@ -3,19 +3,23 @@
   <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
     <mat-icon>close</mat-icon>
   </button>
-  <h1 style="text-align: center;margin-top: 40px;">Agregar nueva venta al Sistema</h1>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Actualizar Venta</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
 
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <form (ngSubmit) = "actualizarDatos()">
         <!-- Formulario de datos de la venta -->
         <mat-form-field class="w100" appearance="outline">
-          <mat-label>Nombre del Cliente</mat-label>
-          <input [(ngModel)] = "fullName" matInput type="text" name="nombreCliente" required placeholder="Digite el nombre del Cliente">
+          <mat-label>Cliente Actual</mat-label>
+          <input [(ngModel)] = "fullName" matInput  name="nombreCliente" required placeholder="Digite el nombre del Cliente">
         </mat-form-field>
 
         <mat-form-field class="w100" appearance="outline">
-          <input type="text" placeholder="Buscar Cliente"  matInput [formControl]="clienteControl" [matAutocomplete]="auto" >
+          <mat-label>Nuevo Cliente</mat-label>
+          <input  placeholder="Buscar Cliente"  matInput [formControl]="clienteControl" [matAutocomplete]="auto" >
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let cliente of filteredClientes| async" [value]="cliente">
               {{ cliente.nombre }} {{ cliente.apellidoPaterno }} {{ cliente.apellidoMaterno }}

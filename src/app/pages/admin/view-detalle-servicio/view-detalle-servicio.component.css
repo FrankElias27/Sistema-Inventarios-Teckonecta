@@ -7,7 +7,7 @@
     margin-bottom: 10px;
     margin-top: 10px; /* Espacio inferior para separar del contenido siguiente */
   }
-  
+
   .search-input {
     flex: 1; /* El input ocupa todo el espacio disponible */
     padding: 10px; /* Espaciado interno */
@@ -16,7 +16,7 @@
     border-radius: 5px; /* Bordes redondeados */
     transition: border-color 0.3s ease; /* Transición suave del color del borde */
   }
-  
+
   .search-input:focus {
     outline: none; /* Elimina el contorno al hacer foco */
     border-color: #1976d2; /* Color del borde al hacer foco */
@@ -34,7 +34,10 @@
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
     transition: background-color 0.3s ease; /* Transición suave del color de fondo */
-  
+
     /* Espaciado entre elementos adyacentes */
     margin-left: 10px; /* Margen izquierdo */
+  }
+  .close-button {
+    position: absolute;
   }

@@ -10,6 +10,34 @@ export class ProductoService {
 
   constructor(private http:HttpClient) { }
 
+  public guardarProducto(producto: any, imagen: File): Observable<any> {
+    const formData = new FormData();
+
+    // Convertir el objeto 'producto' a JSON y agregarlo al FormData
+    formData.append('producto', JSON.stringify(producto));
+
+    // Agregar la imagen al FormData
+    formData.append('imagen', imagen, imagen.name);
+
+    // Hacer la petición POST sin cabeceras ni manejo de errores
+    return this.http.post(`${baserUrl}/productos/guardar`, formData);
+  }
+
+  public actualizarProducto(producto: any, imagen: File | null): Observable<any> {
+    const formData = new FormData();
+
+    // Convertir el objeto 'producto' a JSON y agregarlo al FormData
+    formData.append('producto', JSON.stringify(producto));
+
+    // Si se proporciona imagen, agregarla al FormData
+    if (imagen) {
+      formData.append('imagen', imagen, imagen.name);
+    }
+
+    // Hacer la petición PUT al backend
+    return this.http.put(`${baserUrl}/productos/${producto.productoId}`, formData);
+  }
+
   public listarProductos(){
     return this.http.get(`${baserUrl}/productos/`);
   }

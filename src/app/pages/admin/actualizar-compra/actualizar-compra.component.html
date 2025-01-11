@@ -1,21 +1,25 @@
 <mat-card>
 
-    <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <h1 style="text-align: center;margin-top: 40px;">Agregar nueva compra al Sistema</h1>
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Actualizar Compra</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
 
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <form (ngSubmit) = "actualizarDatos()">
           <!-- Formulario de datos de la venta -->
           <mat-form-field class="w100" appearance="outline">
-            <mat-label>Nombre del Cliente</mat-label>
-            <input [(ngModel)] = "compra.proveedor.razonSocial" matInput type="text" name="nombreCliente" required placeholder="Digite el nombre del Cliente">
+            <mat-label>Empresa Actual</mat-label>
+            <input [(ngModel)] = "compra.proveedor.razonSocial" matInput  name="nombreCliente" required placeholder="Digite el nombre del Cliente">
           </mat-form-field>
 
           <mat-form-field class="w100" appearance="outline">
-            <input type="text" placeholder="Buscar Empresa" matInput [formControl]="proveedorControl" [matAutocomplete]="auto" >
+            <mat-label>Nueva Empresa</mat-label>
+            <input  placeholder="Buscar Empresa" matInput [formControl]="proveedorControl" [matAutocomplete]="auto" >
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let proveedor of filteredProveedores| async" [value]="proveedor">
                 {{ proveedor.razonSocial }}

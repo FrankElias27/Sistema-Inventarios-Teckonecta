@@ -11,6 +11,9 @@ import { ClientesService } from '../../../services/clientes.service';
 import { startWith, map } from 'rxjs/operators';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { ComprasService } from 'src/app/services/compras.service';
+import { Estado } from 'src/app/models/estado.model';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-ventana-modal-compras',
@@ -24,10 +27,9 @@ export class VentanaModalComprasComponent implements OnInit {
         proveedorId:'',
     },
     fechaCompra: '',
-    numTotaldeProductos: '',
+    numTotalProductos: '',
     totalaPagar: '',
-    estado:'',
-    activo: true,
+    estado:Estado.RECIENCREADO
   };
 
   proveedorControl = new FormControl();
@@ -92,14 +94,25 @@ export class VentanaModalComprasComponent implements OnInit {
       return;
     }
 
+       // Ajustar la fecha seleccionada con la hora actual usando Moment.js
+  const fechaSeleccionada = moment(this.CompraData.fechaCompra);
+  const fechaConHoraActual = fechaSeleccionada.set({
+    hour: moment().hour(),
+    minute: moment().minute(),
+    second: 0,
+  });
+
+  // Convertir la fecha a una cadena en formato ISO (o el que prefieras)
+  this.CompraData.fechaCompra = fechaConHoraActual.format('YYYY-MM-DDTHH:mm:ss'); // Ejemplo: "2025-01-05T06:25:00"
+
+
     const ProveedorSeleccionado = this.proveedorControl.value;
 
     this.CompraData.proveedor.proveedorId=ProveedorSeleccionado.proveedorId;
 
     console.log(this.CompraData);
 
-
-    this.CompraData.estado="RECIEN CREADO";
+    this.CompraData.estado=Estado.RECIENCREADO;
 
     this.compraService.agregarCompras(this.CompraData).subscribe(
       (compraCreada) => {

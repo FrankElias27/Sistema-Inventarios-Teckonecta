@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private ModalService:ModalService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +30,10 @@ export class SignupComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', Validators.required]
     });
+  }
+
+  closeModal() {
+    this.ModalService.cerrarAddUsuario();
   }
 
   formSubmit() {
@@ -127,7 +133,10 @@ export class SignupComponent implements OnInit {
     this.userService.añadirUsuario(user).subscribe(
       (data) => {
         console.log(data);
-        Swal.fire('Usuario guardado', 'Usuario registrado con éxito en el sistema', 'success');
+        Swal.fire('Usuario guardado', 'Usuario registrado con éxito en el sistema', 'success').then(() => {
+          this.closeModal();
+          window.location.reload();
+        });
       },
       (error) => {
         console.log(error);

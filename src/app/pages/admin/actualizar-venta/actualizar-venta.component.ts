@@ -8,6 +8,7 @@ import { ClientesService } from 'src/app/services/clientes.service';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-actualizar-venta',
@@ -32,6 +33,17 @@ export class ActualizarVentaComponent implements OnInit {
     this.ventaService.obtenerVenta(this.ventaId).subscribe(
       (data) => {
         this.venta = data;
+        if (this.venta.fechaVenta) {
+          // Usar parseZone para asegurarse de que la fecha no se vea afectada por la zona horaria
+          const fechaFormateada = moment.parseZone(this.venta.fechaVenta).format('MM/DD/YYYY');
+
+          // Convertir la fecha a un objeto Date
+          const dateObj = moment(fechaFormateada, 'MM/DD/YYYY').toDate();
+
+          // Asignar el objeto Date al modelo
+          this.venta.fechaVenta = dateObj;
+        }
+
         console.log(this.venta);
       },
       (error) => {

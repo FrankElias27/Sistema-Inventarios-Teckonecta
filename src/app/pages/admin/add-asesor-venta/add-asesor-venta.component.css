@@ -1,0 +1,6 @@
+.close-button {
+  position: absolute; /* Coloca el botón en una posición absoluta dentro del contenedor */
+  top: 0; /* Coloca el botón en la parte superior */
+  right: 0; /* Alinea el botón a la derecha */
+  z-index: 1; /* Asegura que el botón esté por encima de otros elementos */
+}

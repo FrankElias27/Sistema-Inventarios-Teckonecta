@@ -39,4 +39,8 @@ export class VentaService {
   public obtenerPedidosActivos(){
     return this.http.get(`${baserUrl}/v/activo`);
   }
+
+  public procesarVenta(ventaId: number, inventarioId: number): Observable<any> {
+    return this.http.post(`${baserUrl}/venta/${ventaId}/procesar/${inventarioId}`, {});
+  }
 }

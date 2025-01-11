@@ -9,6 +9,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ClientesService } from '../../../services/clientes.service';
 import { startWith, map } from 'rxjs/operators';
+import { Estado } from 'src/app/models/estado.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ventana-modal',
@@ -22,10 +24,9 @@ export class VentanaModalComponent implements OnInit {
         clienteId:'',
     },
     fechaVenta: '',
-    numTotaldeDetalleVenta: '',
+    numTotalProducto: '',
     totalaPagar: '',
-    estado:'',
-    activo: true,
+    estado:Estado.RECIENCREADO,
   };
 
   clienteControl = new FormControl();
@@ -96,10 +97,22 @@ export class VentanaModalComponent implements OnInit {
       return;
     }
 
+    // Ajustar la fecha seleccionada con la hora actual usando Moment.js
+      const fechaSeleccionada = moment(this.ventaData.fechaVenta);
+      const fechaConHoraActual = fechaSeleccionada.set({
+        hour: moment().hour(),
+        minute: moment().minute(),
+        second: 0,
+      });
+    
+      // Convertir la fecha a una cadena en formato ISO (o el que prefieras)
+      this.ventaData.fechaVenta = fechaConHoraActual.format('YYYY-MM-DDTHH:mm:ss'); // Ejemplo: "2025-01-05T06:25:00"
+    
+
     const clienteSeleccionado = this.clienteControl.value;
 
     this.ventaData.cliente.clienteId=clienteSeleccionado.clienteId;
-    this.ventaData.estado="RECIEN CREADO"
+    this.ventaData.estado=Estado.RECIENCREADO;
 
     console.log(this.ventaData);
 

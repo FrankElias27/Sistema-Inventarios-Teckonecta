@@ -39,4 +39,9 @@ export class ComprasService {
   public obtenerComprasActivos(){
     return this.http.get(`${baserUrl}/compra/activo`);
   }
+
+  public procesarCompra(compraId: number, inventarioId: number): Observable<any> {
+    return this.http.post(`${baserUrl}/compra/${compraId}/procesar/${inventarioId}`, {});
+  }
+
 }

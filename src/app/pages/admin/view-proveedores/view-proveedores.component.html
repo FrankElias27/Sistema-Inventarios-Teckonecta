@@ -1,53 +1,80 @@
-<div class="search-container">
-  <input type="text"  placeholder="" class="search-input">
-  <button routerLink="/admin/add-proveedores" mat-raised-button color="primary" class="custom-button" ><mat-icon> library_add</mat-icon> Proveedor</button>
+<section class="bg-gray-50 dark:bg-gray-900 h-full ">
+  <div class=" lg:pt-[70px]   w-full  flex flex-col items-center justify-center px-6 py-8 sm:pl-[80px]   mx-auto md:h-screen lg:py-0 ">
+    <div class="w-full max-w-screen-xl bg-white rounded-lg shadow dark:border md:mt-0  xl:p-4 dark:bg-gray-800 dark:border-gray-700 div-margin ">
+
+      <div class="flex justify-between items-center px-4 py-4 w-full max-w-screen-md mx-auto">
+        <input type="text" class="search-input flex-grow mr-2 p-2 border rounded-md min-w-[170px] md:max-w-full" placeholder="Bienvenido al Panel de Proveedores">
+        <button  mat-raised-button color="primary" class="w-12 h-12 flex items-center justify-center" (click)="abrirAddProveedor()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div class=" overflow-x-auto  pr-[40px] pl-[40px] h-[480px]">
+        <table mat-table [dataSource]="proveedores" class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400" style="text-align: center;">
+          <!-- Definición de columnas -->
+
+          <ng-container matColumnDef="RUC">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> RUC </th>
+            <td mat-cell *matCellDef="let proveedor" style="vertical-align: middle; min-width: 150px;"> {{ proveedor.ruc }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="RazonSocial">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> RazonSocial </th>
+            <td mat-cell *matCellDef="let proveedor" style="vertical-align: middle; min-width: 150px;"> {{ proveedor.razonSocial }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Asesor de Venta">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Asesores de Venta</th>
+            <td mat-cell *matCellDef="let proveedor" style="vertical-align: middle; min-width: 150px;">
+
+              <button mat-raised-button class="button-label verde" (click)="abrirAddAsesor(proveedor.proveedorId)" >
+                <mat-icon aria-hidden="false" aria-label="Ver detalle" style="color: white;">support_agent</mat-icon>
+                <span style="color: white;">Asesor</span>
+              </button>
+
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="¿Que Vende?">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> ¿Qué Producto Vende? </th>
+            <td mat-cell *matCellDef="let proveedor" style="vertical-align: middle; min-width: 150px;"> {{ proveedor.infoProductos }} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; min-width: 150px;"> Acciones </th>
+            <td mat-cell *matCellDef="let proveedor" style="vertical-align: middle; text-align: center;">
+              <div class="flex justify-center space-x-2">
+                <button mat-flat-button color="primary" class="w-8 h-10 text-sm flex items-center justify-center" (click)="abrirModalActualizar(proveedor.proveedorId)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-flat-button color="warn" class="w-8 h-10 text-sm flex items-center justify-center" (click)="eliminarProveedor(proveedor.proveedorId)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Filas de la tabla -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+
+
+  <!-- Paginator -->
 </div>
-<div class="table-responsive w100">
-  <table mat-table  [dataSource]="proveedores" class="mat-elevation-z8 w100" style="text-align: center;">
-    <!-- Definición de columnas -->
-    <ng-container matColumnDef="DNI">
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> RUC de la Empresa </th>
-      <td mat-cell *matCellDef="let cliente" style="vertical-align: middle;"> {{ cliente.ruc }} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="Cliente">
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Razón social</th>
-      <td mat-cell *matCellDef="let cliente" style="vertical-align: middle;"> {{ cliente.razonSocial }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Direccion" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Direccion </th>
-      <td mat-cell *matCellDef="let cliente" style="vertical-align: middle;"> {{ cliente.direccion }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Correo" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Correo </th>
-      <td mat-cell *matCellDef="let cliente" style="vertical-align: middle;"> {{ cliente.correo }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Telefono" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Telefono </th>
-      <td mat-cell *matCellDef="let cliente" style="vertical-align: middle;"> {{ cliente.telefono }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Acciones" >
-      <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Acciones </th>
-      <td mat-cell *matCellDef="let proveedor" style="vertical-align: middle;">
-        <button [routerLink]="'/admin/proveedores/' + proveedor.proveedorId" mat-flat-button color="primary" class="ml10"><mat-icon>edit</mat-icon></button>
-        <button mat-flat-button color="warn" class="ml10" (click)="eliminarProveedor(proveedor.proveedorId)"><mat-icon>delete</mat-icon></button>
-      </td>
-    </ng-container>
-
-    <!-- Filas de la tabla -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
-<div class="pagination-container text-center mt10" >
-  <button mat-raised-button color="primary" (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
-  <span class="button-divider"></span>
-  <button mat-raised-button color="primary" (click)="nextPage()">Siguiente</button>
+<div class="flex justify-center items-center px-4 py-4">
+  <button mat-raised-button color="primary" (click)="prevPage()" [disabled]="currentPage === 0" class="w-18 h-10 text-sm mx-2">
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+  <span class="mx-2 text-sm">|</span> <!-- Separador visual -->
+  <button mat-raised-button color="primary" (click)="nextPage()" class="w-18 h-10 text-sm mx-2">
+     <mat-icon>arrow_right</mat-icon>
+  </button>
 </div>
 
-   
-  
+</div>
+</div>
+</section>

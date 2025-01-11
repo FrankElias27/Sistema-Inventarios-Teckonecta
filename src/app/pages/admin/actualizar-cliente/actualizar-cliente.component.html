@@ -1,112 +1,152 @@
 <mat-card>
-  <h1>Agregar Nuevo Cliente</h1>
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Actualizar cliente</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
+
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <form *ngIf = "cliente" (submit) = "actualizarDatos()">
-        <mat-form-field class="w100" appearance="outline">
-          <mat-label>Nombre</mat-label>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre o Razón Social</label>
           <input
-          [(ngModel)] = "cliente.nombre"
-          type="text"
           name="nombre"
-          required
-          placeholder="Digite el nombre"
-          matInput>
-        </mat-form-field>
-
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w100" appearance="outline">
-              <mat-label>Apellido Paterno</mat-label>
-              <input
-              [(ngModel)]  = "cliente.apellidoPaterno"
-              type="text"
-              name="apellidoPaterno"
-              required
-              placeholder="Digite el apellido paterno"
-              matInput>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-6">
-            <mat-form-field class="w100" appearance="outline">
-              <mat-label>Apellido Materno</mat-label>
-              <input
-              [(ngModel)]  = "cliente.apellidoMaterno"
-              type="text"
-              name="apellidoMaterno"
-              required
-              placeholder="Digite el apellido materno"
-              matInput>
-            </mat-form-field>
-          </div>
+          type="text" id="nombre"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el nombre o la Razón Social "
+          [(ngModel)] = "cliente.nombre"
+          >
         </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w100" appearance="outline">
-              <mat-label>DNI</mat-label>
-              <input
-              [(ngModel)]  = "cliente.dni"
-              type="number"
-              name="dni"
-              required
-              placeholder="Digite el dni"
-              matInput>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-6">
-              <mat-form-field class="w100" appearance="outline">
-                  <mat-label>Fecha de Nacimiento</mat-label>
-                  <input matInput [matDatepicker]="picker" [(ngModel)] = "cliente.fechaNacimiento" required name="fechaNacimiento" placeholder="Seleccione la fecha de nacimiento">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-          </div>
-        </div>
-
-        <mat-form-field class="w100" appearance="outline">
-          <mat-label>Direccion</mat-label>
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+          <div>
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno (Clientes)</label>
           <input
-          [(ngModel)] = "cliente.direccion"
-          type="text"
+          name="apellidoPaterno"
+          type="text" id="apellidoPaterno"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el Apellido Paterno"
+          [(ngModel)] = "cliente.apellidoPaterno"
+          >
+        </div>
+
+        <div >
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno (Clientes)</label>
+          <input
+          name="apellidoMaterno"
+          type="text" id="apellidoMaterno"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el Apellido Materno"
+          [(ngModel)] = "cliente.apellidoMaterno"
+          >
+        </div>
+
+      </div>
+
+      <div class="relative mb-4">
+
+        <label for="fechaNacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento (Clientes)</label>
+        <mat-form-field  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#0c0033] focus:border-[#0c0033] block w-full h-11  pr-2 pl-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+          <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="cliente.fechaNacimiento"
+          name="fechaNacimiento"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI o RUC</label>
+          <input
+          name="dni"
+          type="text" id="dni"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el DNI o el RUC de la empresa"
+          [(ngModel)]  = "cliente.dni"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+          <input
           name="direccion"
-          required
-          placeholder="Digite la direccion"
-          matInput>
-        </mat-form-field>
+          type="text" id="direccion"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite la dirección"
+          [(ngModel)] = "cliente.direccion"
+          >
+        </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w100" appearance="outline">
-              <mat-label>Correo</mat-label>
-              <input
-              [(ngModel)]  = "cliente.correo"
-              type="email"
-              name="correo"
-              required
-              placeholder="Digite el correo"
-              matInput>
-            </mat-form-field>
-          </div>
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
+          <input
+          name="correo"
+          type="text" id="correo"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el correo"
+          [(ngModel)] = "cliente.correo"
+          >
+        </div>
 
-          <div class="col-md-6">
-              <mat-form-field class="w100" appearance="outline">
-                  <mat-label>Telefono</mat-label>
-                  <input
-                  [(ngModel)]  = "cliente.telefono"
-                  type="number"
-                  name="telefono"
-                  required
-                  placeholder="Digite el telefono"
-                  matInput>
-                </mat-form-field>
-          </div>
+        <div class="mb-4">
+          <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+          <input
+          name="telefono"
+          type="text" id="telefono"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Digite el teléfono"
+          [(ngModel)]  = "cliente.telefono"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Tipo de Cliente
+          </label>
+          <mat-select
+            [(ngModel)]="cliente.tipoCliente"
+            [ngModelOptions]="{standalone: true}"
+            required
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                   dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <mat-option value="COMUN">Común</mat-option>
+            <mat-option value="INSTALADOR">Instalador</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="mb-4">
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Antigüedad
+          </label>
+          <mat-select
+            [(ngModel)]="cliente.antiguedadCliente"
+            [ngModelOptions]="{standalone: true}"
+            required
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                   dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <mat-option value="ANTIGUO">Antiguo</mat-option>
+            <mat-option value="NUEVO">Nuevo</mat-option>
+          </mat-select>
         </div>
 
         <div class="container text-center">
-          <button mat-raised-button color="primary">Guardar</button>
+          <button mat-raised-button color="primary">Actualizar</button>
         </div>
       </form>
     </div>

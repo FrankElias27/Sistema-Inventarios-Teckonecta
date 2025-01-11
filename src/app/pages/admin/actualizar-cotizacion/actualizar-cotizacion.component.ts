@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import  Swal  from 'sweetalert2';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-actualizar-cotizacion',
@@ -31,10 +32,17 @@ export class ActualizarCotizacionComponent implements OnInit {
     this.cotizacionService.obtenerCotizacion(this.cotizacionId).subscribe(
       (data) => {
         this.cotizacion = data;
-        if (this.cotizacion.fechaCotizacion) {
-          // Asume que fechaCotizacion viene en formato 'DD/MM/YYYY'
-          this.cotizacion.fechaCotizacion = this.convertToDate(this.cotizacion.fechaCotizacion);
-        }
+        // Asegurarse de que la fecha se mantenga en el formato correcto
+                        if (this.cotizacion.fechaCotizacion) {
+                          // Usar parseZone para asegurarse de que la fecha no se vea afectada por la zona horaria
+                          const fechaFormateada = moment.parseZone(this.cotizacion.fechaCotizacion).format('MM/DD/YYYY');
+                
+                          // Convertir la fecha a un objeto Date
+                          const dateObj = moment(fechaFormateada, 'MM/DD/YYYY').toDate();
+                
+                          // Asignar el objeto Date al modelo
+                          this.cotizacion.fechaCotizacion = dateObj;
+                        }
         console.log(this.cotizacion);
       },
       (error) => {
@@ -85,11 +93,6 @@ export class ActualizarCotizacionComponent implements OnInit {
 
   public ActualizarCotizacion(){
     const clienteSeleccionado = this.clienteControl.value;
-
-   // Asegúrate de que la fecha esté en el formato correcto
-   if (this.cotizacion.fechaCotizacion instanceof Date) {
-    this.cotizacion.fechaCotizacion = this.formatDateToString(this.cotizacion.fechaCotizacion);
-  }
 
     this.cotizacion.cliente.clienteId=clienteSeleccionado.clienteId;
     this.cotizacionService.actualizarCotizacion(this.cotizacion).subscribe(

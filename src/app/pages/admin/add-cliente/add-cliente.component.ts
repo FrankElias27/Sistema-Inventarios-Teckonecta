@@ -3,6 +3,7 @@ import { ClientesService } from 'src/app/services/clientes.service';
 import  Swal  from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-add-cliente',
@@ -19,12 +20,21 @@ export class AddClienteComponent implements OnInit {
     direccion:'',
     dni:'',
     correo:'',
-    telefono:''
+    telefono:'',
+    tipoCliente:'',
+    antiguedadCliente:'',
+
   }
 
-  constructor( private clienteService:ClientesService,private snack:MatSnackBar,private router:Router) { }
+  constructor( private clienteService:ClientesService,private snack:MatSnackBar,private router:Router,
+    private ModalService:ModalService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  closeModal() {
+    this.ModalService.cerrarAddCliente();
   }
 
   guardarCliente() {
@@ -37,20 +47,6 @@ export class AddClienteComponent implements OnInit {
       return;
     }
 
-    if (this.clienteData.apellidoPaterno.trim() == '' || this.clienteData.apellidoPaterno == null) {
-      this.snack.open('El apellido paterno es requerido', '', {
-        duration: 3000
-      });
-      return;
-    }
-
-    if (this.clienteData.apellidoMaterno.trim() == '' || this.clienteData.apellidoMaterno == null) {
-      this.snack.open('El apellido materno es requerido', '', {
-        duration: 3000
-      });
-      return;
-    }
-
     if (this.clienteData.dni == '' || this.clienteData.dni == null) {
       this.snack.open('El DNI o RUC es requerido', '', {
         duration: 3000
@@ -58,13 +54,6 @@ export class AddClienteComponent implements OnInit {
       return;
     }
 
-
-    if (!this.clienteData.fechaNacimiento) {
-      this.snack.open('La fecha de nacimiento es requerida', '', {
-        duration: 3000
-      });
-      return;
-    }
 
     if (this.clienteData.direccion.trim() == '' || this.clienteData.direccion == null) {
       this.snack.open('La dirección del cliente es requerido', '', {
@@ -109,22 +98,19 @@ export class AddClienteComponent implements OnInit {
     this.clienteService.agregarCliente(this.clienteData).subscribe(
       (data) => {
         console.log(data);
-        Swal.fire('Cliente guardado', 'El cliente ha sido guardado con éxito', 'success');
-        this.clienteData = {
-          nombre: '',
-          apellidoPaterno: '',
-          apellidoMaterno: '',
-          fechaNacimiento: '',
-          direccion: '',
-          dni: '',
-          correo: '',
-          telefono: ''
-        };
-
-        this.router.navigate(['/admin/clientes']);
+        Swal.fire('Cliente guardado', 'El cliente ha sido guardado con éxito', 'success').then(() => {
+          this.closeModal();
+          window.location.reload();
+        });
       },
       (error) => {
-        Swal.fire('Error', 'Error al guardar el cliente', 'error');
+        if (error.status === 400) {
+          // Mostrar el mensaje de error recibido desde el backend
+          Swal.fire('Error', error.error, 'error');
+        } else {
+          // Manejar otros errores
+          Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
+        }
       }
     );
   }
