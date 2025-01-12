@@ -1,0 +1,78 @@
+<mat-card>
+
+  <button mat-icon-button color="warn" aria-label="Cerrar" class="close-button" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-subtitle style="text-align: center;">Agregar Movimiento</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <br>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form (ngSubmit) = "guardarMovimiento()">
+
+        <!-- Inventario de Origen -->
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Inventario de Origen
+        </label>
+        <mat-form-field class="w100" appearance="outline">
+          <input
+            placeholder="Buscar Inventario"
+            matInput
+            [formControl]="fromInventoryControl"
+            [matAutocomplete]="fromAuto"
+            required
+          />
+          <mat-autocomplete #fromAuto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let inventario of filteredFromInventory | async" [value]="inventario">
+              {{ inventario.nombre }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Inventario de Destino -->
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Inventario de Destino
+        </label>
+        <mat-form-field class="w100" appearance="outline">
+          <input
+            placeholder="Buscar Inventario"
+            matInput
+            [formControl]="toInventoryControl"
+            [matAutocomplete]="toAuto"
+            required
+          />
+          <mat-autocomplete #toAuto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let inventario of filteredToInventory | async" [value]="inventario">
+              {{ inventario.nombre }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <div class="relative mb-4">
+
+          <label for="fechaTransferencia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha del Movimiento</label>
+          <mat-form-field  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#0c0033] focus:border-[#0c0033] block w-full h-11  pr-2 pl-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+            <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="transferData.fechaTransferencia"
+            name="fechaTransferencia"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+
+      <div class="container text-center">
+        <button mat-raised-button color="primary">Crear Movimiento</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+
+</mat-card>

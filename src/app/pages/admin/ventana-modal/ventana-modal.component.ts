@@ -104,10 +104,10 @@ export class VentanaModalComponent implements OnInit {
         minute: moment().minute(),
         second: 0,
       });
-    
+
       // Convertir la fecha a una cadena en formato ISO (o el que prefieras)
       this.ventaData.fechaVenta = fechaConHoraActual.format('YYYY-MM-DDTHH:mm:ss'); // Ejemplo: "2025-01-05T06:25:00"
-    
+
 
     const clienteSeleccionado = this.clienteControl.value;
 

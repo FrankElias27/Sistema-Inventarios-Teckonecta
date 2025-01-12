@@ -92,6 +92,7 @@ import { ViewExistenciasComponent } from './pages/admin/view-existencias/view-ex
 import { AddExistenciaComponent } from './pages/admin/add-existencia/add-existencia.component';
 import { ActualizarStockInventarioComponent } from './pages/admin/actualizar-stock-inventario/actualizar-stock-inventario.component';
 import { ViewMovimientosComponent } from './pages/admin/view-movimientos/view-movimientos.component';
+import { AddMovimientoComponent } from './pages/admin/add-movimiento/add-movimiento.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -160,7 +161,8 @@ import { ViewMovimientosComponent } from './pages/admin/view-movimientos/view-mo
     ViewExistenciasComponent,
     AddExistenciaComponent,
     ActualizarStockInventarioComponent,
-    ViewMovimientosComponent
+    ViewMovimientosComponent,
+    AddMovimientoComponent
 
 
   ],

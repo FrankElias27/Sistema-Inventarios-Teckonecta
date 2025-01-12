@@ -1,0 +1,12 @@
+.verde {
+  background-color: #4CAF50; /* Verde */
+  color: white; /* Color de texto blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 1px 10px; /* Padding para el contenido dentro del botón */
+  display: inline-flex; /* Permite que los elementos dentro del botón se alineen horizontalmente */
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
+}
+
+.verde mat-icon {
+  margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
